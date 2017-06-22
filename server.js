@@ -56,3 +56,68 @@ app.get("/new", (req, res) => {
 app.listen(PORT, () => {
   console.log("Example app listening on port " + PORT);
 });
+
+// Resource Details page
+app.get("/resources/:resource_id", (req, res) => {
+
+  // Get the resource id from request
+  let resource_id = req.params.resource_id;
+
+  // Declaring a variable to get the query result
+  let resource_details;
+
+  // Getting the resource detail from database
+  knex('resources')
+    .join('users', 'users.id', '=', 'resources.user_id')
+    .where('resources.id', resource_id)
+    .select('resources.id', 'resources.URL', 'resources.title', 'resources.description', 'users.user_name', 'users.id', 'users.avatar_URL')
+    .then((results) => {
+
+      //render the page to show the resource details
+      res.render("resource_detail.ejs", results[0]);
+
+    })
+    .catch(function(error) {
+      console.error(error);
+    });
+
+});
+
+// Resource Comments
+app.get("/resources/:resource_id/comments", (req, res) => {
+
+  // Get the resource id from request
+  let resource_id = req.params.resource_id;
+
+  // Declaring a variable to get the query result
+  let comments;
+
+  // Getting the resource detail from database
+  knex('comments')
+    .join('users', 'users.id', '=', 'comments.user_id')
+    .where('comments.resource_id', resource_id)
+    .select('comments.id as comment_id', 'comments.comment', 'comments.created_at', 'users.user_name', 'users.avatar_URL', 'users.id as user_id')
+    .then((results) => {
+
+      // resource_details = {
+      //   id: results[0].id,
+      //   url: results[0].URL,
+      //   title: results[0].title,
+      //   description: results[0].description,
+      //   user_name: results[0].user_name,
+      //   avatar: results[0].avatar_URL
+      // }
+
+console.log("results: ", results);
+
+      return res.json(results);
+
+      //render the page to show the resource details
+      // res.render("resource_detail.ejs", results);
+
+    })
+    .catch(function(error) {
+      console.error(error);
+    });
+
+});
