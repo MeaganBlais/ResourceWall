@@ -24,7 +24,7 @@ module.exports = (knex) => {
       .then( (results) => {
         console.log("Added new user.");
         req.session.user = results;
-        res.status(200).send();
+        res.status(200).send(results);
       })
       .catch((err) => {
         throw err;
