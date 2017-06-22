@@ -3,15 +3,55 @@
   <head>
     <title>Home Page</title>
 
+    <!-- External Stylesheets -->
     <link rel="stylesheet" href="/vendor/normalize-4.1.1.css" type="text/css" />
     <link rel="stylesheet" href="/vendor/border-box.css" type="text/css" />
-    <link rel="stylesheet" href="/styles/layout.css" type="text/css" />
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
 
+    <!-- Our Stylesheets -->
+    <link rel="stylesheet" href="/styles/main.css" type="text/css" />
+
+    <!-- External Javascript -->
     <script type="text/javascript" src="/vendor/jquery-3.0.0.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script>
+
+    <!-- Our Javascript -->
     <script type="text/javascript" src="/scripts/app.js"></script>
   </head>
 
   <body>
-    <h1>Hello World!</h1>
+
+    <% include partials/_nav %>
+
+    <div class="container">
+    <!-- Example Resource -->
+    <article class="resource-container">
+      <header>
+        <h1>Resource Title</h1>
+      </header>
+      <section>
+        <p>Bacon ipsum dolor amet picanha sirloin ham hock, corned beef leberkas shoulder chicken fatback sausage ribeye brisket. Ham hock pastrami cow jowl drumstick spare ribs ribeye t-bone doner pork pork belly fatback turkey swine.</p>
+      </section>
+      <footer>
+        <span>
+          <img class="avatar" src="https://www.fillmurray.com/200/300">
+          <span>Username</span>
+        </span>
+        <span class="icons pull-right">
+          <span class="stars">
+            <i class="glyphicon glyphicon-star"></i>
+            <i class="glyphicon glyphicon-star"></i>
+            <i class="glyphicon glyphicon-star"></i>
+            <i class="glyphicon glyphicon-star"></i>
+            <i class="glyphicon glyphicon-star"></i>
+          </span>
+          <span class="heart-comments">
+            <span class="likes"><i class="glyphicon glyphicon-heart"></i> 4</span>
+            <span class="comments"><i class="glyphicon glyphicon-comment"></i> 2</span>
+          </span>
+        </span>
+      </footer>
+    </article>
+    </div>
   </body>
 </html>

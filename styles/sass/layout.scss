@@ -1,0 +1,26 @@
+body {
+  background-color: #EEE;
+
+  .container {
+    // width: 550px;
+    // margin: 0 auto;
+
+  }
+}
+
+.registration-container {
+  background-color: #FFFFFF;
+  padding: 20px;
+
+    .input-group {
+      margin: 15px 0;
+      width: 100%;
+
+      .input-group-addon {
+        width: 15%;
+        text-align: right;
+        background-color: $nav-color;
+        color: #FFFFFF;
+      }
+    }
+}

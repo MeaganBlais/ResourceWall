@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <title>Home Page</title>
+
+    <!-- External Stylesheets -->
+    <link rel="stylesheet" href="/vendor/normalize-4.1.1.css" type="text/css" />
+    <link rel="stylesheet" href="/vendor/border-box.css" type="text/css" />
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
+
+    <!-- Our Stylesheets -->
+    <link rel="stylesheet" href="/styles/main.css" type="text/css" />
+
+    <!-- External Javascript -->
+    <script type="text/javascript" src="/vendor/jquery-3.0.0.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script>
+
+    <!-- Our Javascript -->
+    <script type="text/javascript" src="/scripts/app.js"></script>
+  </head>
+
+  <body>
+
+    <% include partials/_nav %>
+
+    <div class="container">
+      <div class="registration-container">
+        <h1>Registration</h1>
+
+        <form>
+        <img class="avatar-big" src="https://www.fillmurray.com/200/300">
+        <div class="input-group">
+          <span class="input-group-addon" id="basic-addon1">Avatar URL</span>
+          <input type="text" class="form-control" placeholder="Avatar URL" aria-describedby="basic-addon1">
+        </div>
+
+        <div class="input-group">
+          <span class="input-group-addon" id="basic-addon1">Fullname</span>
+          <input type="text" class="form-control" placeholder="Fullname" aria-describedby="basic-addon1">
+        </div>
+        <div class="input-group">
+          <span class="input-group-addon" id="basic-addon1">Username</span>
+          <input type="text" class="form-control" placeholder="Username" aria-describedby="basic-addon1">
+        </div>
+        <div class="input-group">
+          <span class="input-group-addon" id="basic-addon1">E-mail</span>
+          <input type="text" class="form-control" placeholder="E-mail" aria-describedby="basic-addon1">
+        </div>
+        <div class="input-group">
+          <span class="input-group-addon" id="basic-addon1">Password</span>
+          <input type="password" class="form-control" placeholder="Password" aria-describedby="basic-addon1">
+        </div>
+        <div class="input-group">
+          <span class="input-group-addon" id="basic-addon1">Confirm Password</span>
+          <input type="password" class="form-control" placeholder="Password" aria-describedby="basic-addon1">
+        </div>
+      <button class="btn btn-default" type="submit">Submit</button>
+      </form>
+      </div>
+
+    </div>
+
+  </body>
+</html>

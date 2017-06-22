@@ -1,0 +1,21 @@
+.navbar {
+  background-color: $nav-color;
+
+  span {
+    color: $nav-text-color;
+  }
+}
+
+.logged-out {
+}
+
+.logged-in {
+  display: none;
+}
+
+
+.avatar {
+  height: 30px;
+  width: auto;
+}
+
