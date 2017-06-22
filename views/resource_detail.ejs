@@ -26,37 +26,57 @@
 
     <div class="container">
     <!-- Example Resource -->
-    <article class="resource-container">
-      <header>
-        <h1><a id="url" href="<%= URL%>" data-id="<%= id %>"><%= title %></a></h1>
-      </header>
-      <section>
-        <p><%= description %></p>
+      <article class="resource-container">
+        <header>
+          <h1><a id="url" href="<%= URL%>" data-id="<%= id %>"><%= title %></a></h1>
+        </header>
+        <section>
+          <p><%= description %></p>
+        </section>
+        <footer>
+          <span>
+            <img class="avatar" src="<%= avatar_URL%>">
+            <span><%= user_name%></span>
+          </span>
+          <span class="icons pull-right">
+            <span class="stars">
+              <i class="glyphicon glyphicon-star"></i>
+              <i class="glyphicon glyphicon-star"></i>
+              <i class="glyphicon glyphicon-star"></i>
+              <i class="glyphicon glyphicon-star"></i>
+              <i class="glyphicon glyphicon-star"></i>
+            </span>
+            <span class="heart-comments">
+              <span class="likes"><i class="glyphicon glyphicon-heart"></i> 4</span>
+              <span class="comments"><i class="glyphicon glyphicon-comment"></i> 2</span>
+            </span>
+          </span>
+          <span calss="categories">
+            <p>tag 1</p>
+            <p>tag 2</p>
+          </span>
+        </footer>
+      </article>
+
+      <article  class="comment_container">
+        <form>
+          <header>
+            <img class="avatar" src ="https://www.fillmurray.com/200/300">
+            <span class="input_user" data-id=''>Username</span>
+          </header>
+          <div class="input-comment">
+            <textarea type="text" class="form-control" placeholder="Your comment..." aria-describedby="basic-addon1"></textarea>
+          </div>
+          <footer>
+            <button class="btn btn-default" type="submit">Submit</button>
+          </footer>
+        </form>
+      </article>
+
+      <!-- Posted comments will be appended here-->
+      <section id="show_comments_container">
       </section>
-      <footer>
-        <span>
-          <img class="avatar" src="<%= avatar_URL%>">
-          <span><%= user_name%></span>
-        </span>
-        <span class="icons pull-right">
-          <span class="stars">
-            <i class="glyphicon glyphicon-star"></i>
-            <i class="glyphicon glyphicon-star"></i>
-            <i class="glyphicon glyphicon-star"></i>
-            <i class="glyphicon glyphicon-star"></i>
-            <i class="glyphicon glyphicon-star"></i>
-          </span>
-          <span class="heart-comments">
-            <span class="likes"><i class="glyphicon glyphicon-heart"></i> 4</span>
-            <span class="comments"><i class="glyphicon glyphicon-comment"></i> 2</span>
-          </span>
-        </span>
-        <span calss="categories">
-          <p>tag 1</p>
-          <p>tag 2</p>
-        </span>
-      </footer>
-    </article>
+
     </div>
   </body>
 </html>

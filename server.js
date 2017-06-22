@@ -57,6 +57,7 @@ app.listen(PORT, () => {
   console.log("Example app listening on port " + PORT);
 });
 
+
 // Resource Details page
 app.get("/resources/:resource_id", (req, res) => {
 
@@ -96,24 +97,11 @@ app.get("/resources/:resource_id/comments", (req, res) => {
   knex('comments')
     .join('users', 'users.id', '=', 'comments.user_id')
     .where('comments.resource_id', resource_id)
+    .orderBy('comments.created_at', 'desc')
     .select('comments.id as comment_id', 'comments.comment', 'comments.created_at', 'users.user_name', 'users.avatar_URL', 'users.id as user_id')
     .then((results) => {
 
-      // resource_details = {
-      //   id: results[0].id,
-      //   url: results[0].URL,
-      //   title: results[0].title,
-      //   description: results[0].description,
-      //   user_name: results[0].user_name,
-      //   avatar: results[0].avatar_URL
-      // }
-
-console.log("results: ", results);
-
       return res.json(results);
-
-      //render the page to show the resource details
-      // res.render("resource_detail.ejs", results);
 
     })
     .catch(function(error) {
