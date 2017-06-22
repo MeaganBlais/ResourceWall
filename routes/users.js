@@ -26,6 +26,8 @@ module.exports = (knex) => {
       date_join: new Date()
     }
 
+    console.log(req.body);
+
     knex('users')
       .insert(newUser)
       .then( (results) => {
