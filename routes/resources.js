@@ -8,7 +8,7 @@ module.exports = (knex) => {
   router.post("/", (req, res) => {
     const newResource = {
       // id: , //needs to be randomly generated
-      user_id: req.session.user.id, //this will come from session id
+      user_id: req.session.user.id,
       'URL': req.body.URL,
       title: req.body.title,
       description: req.body.description

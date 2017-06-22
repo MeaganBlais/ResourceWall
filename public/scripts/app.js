@@ -11,6 +11,8 @@ $(document).ready(function() {
         console.log('Success: ');
       }
     });
+    $(this).find('textarea').val('');
+    $(this).find('input').val('');
     $(this).find('.counter').html(255)
   });
 });
