@@ -11,7 +11,8 @@ var registerFormHandler = function () {
       data: $(this).serialize(),
       success: (response) => {
         console.log("Browser thinks it works");
-        localStorage.setItem("userInfo", JSON.stringify(response[0]));
+        localStorage.setItem("userInfo", JSON.stringify(response));
+        navLogin();
       }
     });
 
