@@ -18,6 +18,44 @@ var registerFormHandler = function () {
   })
 }
 
+var loginFormHandler = function () {
+  //when a user clicks the loging button on the nav
+  $(".logged-out form").on("submit", function (event) {
+    event.preventDefault();
+    //validate inputs
+
+    //send POST request to server to validate login information
+    $.ajax({
+      url: "/api/users/login",
+      method: "POST",
+      data: $(this).serialize(),
+      success: (response) => {
+        console.log("Browser thinks it works");
+        console.log(response);
+        localStorage.setItem("userInfo", JSON.stringify(response));
+        navLogin();
+      }
+    });
+
+  });
+}
+
+
+var logoutButton = function () {
+  //when logout button is clicked, send post request to server to logout
+  $("#logout-nav").on("click", (event) => {
+    event.preventDefault();
+    $.ajax({
+      url: "/api/users/logout",
+      method: "POST",
+      success: () => {
+        navLogout();
+        localStorage.clear();
+      }
+    })
+  })
+}
+
 var checkLogin = function () {
   //checks if the user has a saved session in local storage
   var userInfo = JSON.parse(localStorage.getItem("userInfo"));
@@ -53,5 +91,7 @@ var onStart = function () {
 $(document).ready(function () {
   onStart();
   registerFormHandler();
-  console.log(checkLogin());
+  logoutButton();
+  loginFormHandler();
+  console.log(checkLogin() ? 'User is logged in' : 'User is logged out');
 });

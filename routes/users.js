@@ -4,6 +4,7 @@ const express = require('express');
 const router  = express.Router();
 const bcrypt = require('bcrypt');
 
+
 module.exports = (knex) => {
 
   router.post("/", (req, res) => {
@@ -23,12 +24,52 @@ module.exports = (knex) => {
       .returning(['id', 'user_name', 'avatar_URL'])
       .then( (results) => {
         console.log("Added new user.");
-        req.session.user = results;
-        res.status(200).send(results);
+        req.session.user = results[0];
+        res.status(200).send(results[0]);
       })
       .catch((err) => {
         throw err;
       })
+  });
+
+  router.post("/login", (req, res) => {
+  //attempts to log the user in using data provided by the request
+    const user_name = req.body.user_name;
+    const password  = req.body.password;
+
+    //tries to find user in database with provided username
+    knex('users')
+      .select()
+      .where('user_name', user_name)
+      .then( (results) => {
+        //if nothing is returned exit function
+        if (results.length === 0) {
+          console.log("No user exists");
+          res.status(500).send();
+          return;
+        }
+        //check hashed password against provided
+        if (bcrypt.compareSync(password, results[0].password)) {
+          let userInfo = Object.assign({}, results[0]);
+          delete userInfo.password;
+          req.session.user = userInfo;
+          res.status(200).send(userInfo);
+        } else {
+          console.log("wrong password");
+          res.status(500).send();
+        }
+      })
+      .catch( (err) => {
+        throw err;
+      })
+
+
+  });
+
+  router.post("/logout", (req, res) => {
+  //logs the user out of the current session by setting req.session.user to null, redirects user to home page
+    req.session = null;
+    res.status(201).send();
   });
 
   return router;
