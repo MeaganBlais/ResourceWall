@@ -7,6 +7,7 @@
     <link rel="stylesheet" href="/vendor/normalize-4.1.1.css" type="text/css" />
     <link rel="stylesheet" href="/vendor/border-box.css" type="text/css" />
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/rateYo/2.3.2/jquery.rateyo.min.css">
 
     <!-- Our Stylesheets -->
     <link rel="stylesheet" href="/styles/main.css" type="text/css" />
@@ -14,11 +15,17 @@
     <!-- External Javascript -->
     <script type="text/javascript" src="/vendor/jquery-3.0.0.js"></script>
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/rateYo/2.3.2/jquery.rateyo.min.js"></script>
 
     <!-- Our Javascript -->
     <script type="text/javascript" src="/scripts/app.js"></script>
     <script type="text/javascript" src="/scripts/resource_detail.js"></script>
     <script type="text/javascript" src="/scripts/char-counter.js"></script>
+
+
+
+
+
 
   </head>
 
@@ -41,13 +48,13 @@
             <span><%= user_name%></span>
           </span>
           <span class="icons pull-right">
-            <span class="stars">
-              <i class="glyphicon glyphicon-star"></i>
-              <i class="glyphicon glyphicon-star"></i>
-              <i class="glyphicon glyphicon-star"></i>
-              <i class="glyphicon glyphicon-star"></i>
-              <i class="glyphicon glyphicon-star"></i>
-            </span>
+            <div id="rateYo">
+              <input type="radio" name="example" class="rating" value="1" />
+              <input type="radio" name="example" class="rating" value="2" />
+              <input type="radio" name="example" class="rating" value="3" />
+              <input type="radio" name="example" class="rating" value="4" />
+              <input type="radio" name="example" class="rating" value="5" />
+            </div>
             <span class="heart-comments">
               <span class="likes"><i class="glyphicon glyphicon-heart"></i> 4</span>
               <span class="comments"><i class="glyphicon glyphicon-comment"></i> <span id="totalOfComments">2</span></span>

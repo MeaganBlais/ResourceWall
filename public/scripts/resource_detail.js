@@ -1,5 +1,32 @@
 $(document).ready( function() {
 
+
+
+
+  $("#rateYo").rateYo({
+    rating: 2,
+    fullStar: true
+  });
+
+// Setting the size of the stars
+$("#rateYo").rateYo("option", "starWidth", "20px"); //returns a jQuery Element
+  
+//Setting the color of the rated stars
+$("#rateYo").rateYo("option", "ratedFill", "#E74C3C"); //returns a jQuery Element
+
+
+$("#rateYo").rateYo("option", "fullStar", true); //returns a jQuery Element
+
+ 
+// Setter
+$("#rateYo").rateYo("option", "onSet", function () {
+
+console.log("actual rating: ", $("#rateYo").rateYo("rating"));
+       }); //returns a jQuery Element
+
+
+
+
   // Variables to get information about the user and the resource id
   var resource_id = $('#url').data('id')
   var user = JSON.parse(localStorage.getItem("userInfo"))
