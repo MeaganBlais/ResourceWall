@@ -18,18 +18,18 @@ $(document).ready(function() {
     if ($text === "" || $text === null) {
 
       //if text is null, show a message for empty text
-      $message.text("Your comment is empty!");
+      $message.text("Your description is empty!");
       $textarea.focus();
 
     } else if ($textLength > 255) {
 
-      //if text exceed 140 characters, show a message for too long text
-      $message.text("Your message is too long!");
+      //if text exceed 255 characters, show a message for too long text
+      $message.text("Your description is too long!");
       $textarea.focus();
 
     } else {
 
-      console.log('Button clicked, performing ajax call ...', $(this).serialize());
+      // console.log('Button clicked, performing ajax call ...', $(this).serialize());
       $.ajax({
         url: '/api/resources',
         method: 'POST',
@@ -43,4 +43,31 @@ $(document).ready(function() {
       $(this).find('.counter').html(255)
     }
   });
+
+  //Send ajax request to write to likes table
+    const addLike = () => {
+      $.ajax({
+        method: "POST",
+        url: "/api/resources/" + resource_id + "/like",
+        data: {
+          // user_id: $('input[name="user_id"]').val(),
+          user_id: $('user_id').val(),
+          resource_id: $('resource_id').val()
+        }
+      }).done( (result) => {
+        console.log(result);
+
+      })
+    }
+
+    // watching for like event
+    $('.glyphicon-heart').on('click', (event) => {
+      event.preventDefault();
+      console.log('click')
+        addLike();
+    });
+
+
+
+
 });

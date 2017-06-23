@@ -19,6 +19,8 @@ const cookieSession = require('cookie-session');
 const usersRoutes = require("./routes/users");
 const resourcesRoutes = require("./routes/resources");
 const resourcesComments = require("./routes/comments");
+const likeRoutes = require("./routes/likes");
+const ratingsRoutes = require("./routes/ratings");
 
 // Load the logger first so all (static) HTTP requests are logged to STDOUT
 // 'dev' = Concise output colored by response status for development use.
@@ -50,6 +52,8 @@ app.use(express.static("public"));
 app.use("/api/users", usersRoutes(knex));
 app.use("/api/resources", resourcesRoutes(knex));
 app.use("/api/resources/:resource_id/comments", resourcesComments(knex));
+app.use("/api/resources/:resource_id/like", likeRoutes(knex));
+app.use("/api/resources/:resource_id/ratings", ratingsRoutes(knex));
 
 // Home page
 app.get("/", (req, res) => {
