@@ -23,7 +23,7 @@ module.exports = (knex) => {
       .insert(newUser)
       .returning(['id', 'user_name', 'avatar_URL'])
       .then( (results) => {
-        console.log("Added new user.");
+        console.log(newUser);
         req.session.user = results[0];
         res.status(200).send(results[0]);
       })
