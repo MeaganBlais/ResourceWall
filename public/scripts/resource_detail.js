@@ -13,6 +13,54 @@ $(document).ready( function() {
   $("#avatar_comment").attr("src", user_avatar);
 
 
+  //event listener to submit button
+  $("#input-comment-btn").on("click", function(event) {
+
+    //prevent to change the page
+    event.preventDefault();
+
+    //get data from the form
+    $textarea = $(this).closest("form").find("textarea");
+    $message = $(this).closest("form").find("#message");
+    $counter = $(this).closest("form").find(".counter");
+
+    //prepare data for Ajax calling
+    $data = $textarea.serialize();
+
+    //get the text (without spaces) and its lenght to validate
+    $text = $textarea.val().trim();
+    $textLength = $text.length;
+
+
+    if ($text === "" || $text === null) {
+
+      //if text is null, show a message for empty text
+      $message.text("Your comment is empty!");
+      $textarea.focus();
+
+    } else if ($textLength > 255) {
+
+      //if text exceed 140 characters, show a message for too long text
+      $message.text("Your message is too long!");
+      $textarea.focus();
+
+    } else {
+
+      //validations are ok, comment will be send, and the area for comments will be re-loaded
+      $.post(`/api/resources/${resource_id}/comments`, $data)
+
+        .done(function () {
+                loadComments();
+              });
+
+      //hidden the message if it is shown, clear the textarea, and reset the char-counter
+      $message.text("");
+      $textarea.val("").focus();
+      $counter.text("255");
+    }
+
+  });
+
 
   //function that takes in a comment object
   //and return a comment <article> element containing the entire HTML structure of the comment
@@ -59,7 +107,7 @@ $(document).ready( function() {
     var comment;
 
     //clear the container before to read all comments
-    $("#tshow_comments_container").empty();
+    $("#show_comments_container").empty();
 
 
     //if there are any comment, loops through comments

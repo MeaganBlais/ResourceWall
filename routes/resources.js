@@ -29,5 +29,9 @@ module.exports = (knex) => {
     // console.log(newResource)
   });
 
+  // router.post('/:resource_id/comments', (req,res) => {
+  //   console.log("params: ", req.params);
+  // })
+
   return router;
 }
