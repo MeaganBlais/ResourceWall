@@ -13,7 +13,7 @@ var createResourceElement = function (resource) {
   var $resource = $('<article>').addClass('resource-container');
 
   $resource.data('resource-data', resource);
-
+  console.log(resource);
   //header
   var resourceHeader = $("<header>").append(`
     <h1>${resource.title}</h1>
