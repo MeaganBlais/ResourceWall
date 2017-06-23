@@ -16,22 +16,31 @@ module.exports = (knex) => {
 
     const addResource = (data) => {
       knex('resources')
-      .insert(data)
+        .insert(data)
+        .then( (results) => {
+          // need to send response to tell ajax call on app.js that post was successful
+          res.status(200).send();
+        })
+        .catch( (err) => {
+          throw err;
+        })
+    }
+    addResource(newResource);
+  });
+
+
+  router.get("/", (req, res) => {
+    knex('resources')
+      .select()
       .then( (results) => {
-        // need to send response to tell ajax call on app.js that post was successful
-        res.status(200).send();
+
+        res.status(200).send(results);
       })
       .catch( (err) => {
         throw err;
       })
-    }
-    addResource(newResource);
-    // console.log(newResource)
-  });
 
-  // router.post('/:resource_id/comments', (req,res) => {
-  //   console.log("params: ", req.params);
-  // })
+  });
 
   return router;
 }
