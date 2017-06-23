@@ -13,3 +13,30 @@
   display: grid;
   text-align: center;
 }
+
+.comment_container {
+
+  .comment_footer {
+    width: 98%;
+
+    #input-comment-btn {
+      float: right;
+    }
+
+    .counter {
+        font-size: $flash-message-size;
+        line-height: 3;
+        float: right;
+        padding-right: 10px;
+      }
+
+    #message{
+      color: $flash-message-color;
+      float: left;
+      margin: 0;
+      font-size: $flash-message-size;
+    }
+
+  }
+
+}

@@ -48,7 +48,7 @@
             </span>
             <span class="heart-comments">
               <span class="likes"><i class="glyphicon glyphicon-heart"></i> 4</span>
-              <span class="comments"><i class="glyphicon glyphicon-comment"></i> 2</span>
+              <span class="comments"><i class="glyphicon glyphicon-comment"></i> <span id="totalOfComments">2</span></span>
             </span>
           </span>
           <span calss="categories">
@@ -59,16 +59,20 @@
       </article>
 
       <article  class="comment_container">
-        <form>
+        <form action="/api/resources/<%= id %>/comments" method=POST >
           <header>
-            <img class="avatar" src ="https://www.fillmurray.com/200/300">
+            <img class="avatar" id="avatar_comment" src ="https://www.fillmurray.com/200/300">
             <span class="input_user" data-id=''>Username</span>
           </header>
           <div class="input-comment">
-            <textarea type="text" class="form-control" placeholder="Your comment..." aria-describedby="basic-addon1"></textarea>
+            <textarea type="text" class="form-control" placeholder="Your comment..." name="comment"></textarea>
+
+
           </div>
-          <footer>
-            <button class="btn btn-default" type="submit">Submit</button>
+          <footer class="comment_footer">
+            <p id="message"></p> <!-- flash messages will be shown here -->
+            <button class="btn btn-default" id="input-comment-btn" type="submit">Submit</button>
+            <span class="counter">255</span>
           </footer>
         </form>
       </article>
