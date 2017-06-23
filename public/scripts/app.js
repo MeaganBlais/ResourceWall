@@ -29,18 +29,18 @@ $(document).ready(function() {
 
     } else {
 
-    console.log('Button clicked, performing ajax call ...', $(this).serialize());
-    $.ajax({
-      url: '/api/resources',
-      method: 'POST',
-      data: $(this).serialize(),
-      success: function() {
-        console.log('Success: ');
-      }
-    });
-    $(this).find('textarea').val('');
-    $(this).find('input').val('');
-    $(this).find('.counter').html(255)
-  }
+      console.log('Button clicked, performing ajax call ...', $(this).serialize());
+      $.ajax({
+        url: '/api/resources',
+        method: 'POST',
+        data: $(this).serialize(),
+        success: function() {
+          console.log('Success: ');
+        }
+      });
+      $(this).find('textarea').val('');
+      $(this).find('input').val('');
+      $(this).find('.counter').html(255)
+    }
   });
 });
