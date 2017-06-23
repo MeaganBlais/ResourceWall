@@ -31,9 +31,18 @@ module.exports = (knex) => {
 
   router.get("/", (req, res) => {
     knex('resources')
-      .select()
+      .join('users', 'users.id', '=', 'resources.user_id')
+      .select('resources.id AS resource_id', 'resources.URL', 'resources.title', 'resources.description',
+        'user_id', 'users.user_name', 'users.avatar_URL')
       .then( (results) => {
-
+        // for (resource in results) {
+        //   knex('ratings')
+        //     .select()
+        //     .where(resource_id, 'resource_id')
+        //     .then((results) => {
+        //       resource['ratings'] = results;
+        //     })
+        // }
         res.status(200).send(results);
       })
       .catch( (err) => {
