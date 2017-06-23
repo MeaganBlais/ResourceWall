@@ -44,30 +44,5 @@ $(document).ready(function() {
     }
   });
 
-  //Send ajax request to write to likes table
-    const addLike = () => {
-      $.ajax({
-        method: "POST",
-        url: "/api/resources/" + resource_id + "/like",
-        data: {
-          // user_id: $('input[name="user_id"]').val(),
-          user_id: $('user_id').val(),
-          resource_id: $('resource_id').val()
-        }
-      }).done( (result) => {
-        console.log(result);
-
-      })
-    }
-
-    // watching for like event
-    $('.glyphicon-heart').on('click', (event) => {
-      event.preventDefault();
-      console.log('click')
-        addLike();
-    });
-
-
-
 
 });

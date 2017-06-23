@@ -51,7 +51,7 @@ app.use(express.static("public"));
 app.use("/api/users", usersRoutes(knex));
 app.use("/api/resources", resourcesRoutes(knex));
 app.use("/api/resources/:resource_id/comments", resourcesComments(knex));
-app.use("/api/resources/:resource_id/like", likeRoutes(knex));
+app.use("/api/resources/:resource_id/likes", likeRoutes(knex));
 
 // Home page
 app.get("/", (req, res) => {

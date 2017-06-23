@@ -39,7 +39,7 @@ var createResourceElement = function (resource) {
         <i class="glyphicon glyphicon-star"></i>
       </span>
       <span class="heart-comments">
-        <span class="likes"><i class="glyphicon glyphicon-heart"></i> 4</span>
+        <span class="likes"><i class="glyphicon glyphicon-heart"></i><span id="totalOfLikes"></span>4</span>
         <span class="comments"><i class="glyphicon glyphicon-comment"></i> 2</span>
       </span>
     </span>
