@@ -1,0 +1,45 @@
+.new-container {
+  background-color: #FFFFFF;
+  padding: 20px;
+
+  .input-group {
+    margin: 15px 0;
+    width: 100%;
+
+    .input-group-addon {
+      width: 15%;
+      text-align: right;
+      background-color: $nav-color;
+      color: #FFFFFF;
+    }
+
+    textarea {
+      height: 100px;
+    }
+  }
+  #submit-resource-btn {
+    float: right;
+  }
+
+  #message{
+    color: $flash-message-color;
+    float: left;
+    margin: 0;
+    font-size: $flash-message-size;
+  }
+
+  .counter {
+    font-size: $flash-message-size;
+    line-height: 3;
+    float: right;
+    padding-right: 10px;
+  }
+
+  .over-char-limit{
+    color: $flash-message-color;
+  }
+
+  #selectbox {
+    overflow: scroll;
+  }
+}
