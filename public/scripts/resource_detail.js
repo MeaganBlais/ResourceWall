@@ -1,31 +1,18 @@
 $(document).ready( function() {
 
-
-
-
-  $("#rateYo").rateYo({
-    rating: 2,
-    fullStar: true
-  });
-
-// Setting the size of the stars
-$("#rateYo").rateYo("option", "starWidth", "20px"); //returns a jQuery Element
-  
-//Setting the color of the rated stars
-$("#rateYo").rateYo("option", "ratedFill", "#E74C3C"); //returns a jQuery Element
-
-
-$("#rateYo").rateYo("option", "fullStar", true); //returns a jQuery Element
-
- 
-// Setter
-$("#rateYo").rateYo("option", "onSet", function () {
-
-console.log("actual rating: ", $("#rateYo").rateYo("rating"));
-       }); //returns a jQuery Element
-
-
-
+var data = {
+  URL: "url",
+  avatar_URL: "avatar",
+  description: "description",
+  resource_id: "1",
+  title: "test",
+  user_id: "2",
+  user_name: "owner",
+  ratings: [
+      { user_id: JSON.parse(localStorage.getItem("userInfo")).id, resource_id: "1", rating_id: "1", rating: "1"},
+      { user_id: "2", resource_id: "1", rating_id: "2", rating: "4"}
+    ]
+}
 
   // Variables to get information about the user and the resource id
   var resource_id = $('#url').data('id')
@@ -33,6 +20,38 @@ console.log("actual rating: ", $("#rateYo").rateYo("rating"));
   var user_id = user.id;
   var user_name = user.user_name;
   var user_avatar = user.avatar_URL;
+
+  // Setting the initial rating
+  $(".rateYo").rateYo({
+    rating: getUserRating(user_id, data),
+    fullStar: true
+  });
+
+  // Setting the parameters of star ratings
+  $(".rateYo").rateYo("option", "starWidth", "20px"); // Size of the stars
+  $(".rateYo").rateYo("option", "ratedFill", "#E74C3C"); // Color of the rated stars
+  $(".rateYo").rateYo("option", "fullStar", true); // Setting ratings as full star
+
+  //Set the average of ratings
+  $(".avg_rating").text(setAvgRating(data));
+
+   
+  // Getting the rating selected by the user
+  $(".rateYo").rateYo("option", "onSet", function () {
+
+    //Get the rating clicked
+    var new_rating = $(".rateYo").rateYo("rating");
+
+    //Call a function to anlyse the user action
+    analyseRating(data, new_rating);
+
+  });
+
+
+
+
+
+
 
   //set the user information on comment container
   $(".input_user").text(user_name);
