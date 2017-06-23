@@ -37,6 +37,10 @@
       font-size: $flash-message-size;
     }
 
+    .over-char-limit{
+      color: $flash-message-color;
+    }
+
   }
 
 }

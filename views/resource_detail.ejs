@@ -18,6 +18,8 @@
     <!-- Our Javascript -->
     <script type="text/javascript" src="/scripts/app.js"></script>
     <script type="text/javascript" src="/scripts/resource_detail.js"></script>
+    <script type="text/javascript" src="/scripts/char-counter.js"></script>
+
   </head>
 
   <body>
@@ -59,7 +61,7 @@
       </article>
 
       <article  class="comment_container">
-        <form action="/api/resources/<%= id %>/comments" method=POST >
+        <form action="/api/resources/<%= id %>/comments" method=POST id="new-comment">
           <header>
             <img class="avatar" id="avatar_comment" src ="https://www.fillmurray.com/200/300">
             <span class="input_user" data-id=''>Username</span>
