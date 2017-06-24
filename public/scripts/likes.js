@@ -1,69 +1,73 @@
-$(document).ready(function () {
 
-  // watching for like/unlike event
-  var likeButtonHandler = function () {
-    $('#all-resources').on('click', '.glyphicon-heart', function (event) {
-      console.log('click', $(this).closest('.resource-container'));
-      console.log('user', data.resource_id);
-      var resource = $(this).closest('.resource-container');
-      if (doesUserLikeResource(user.id, resource_data)) {
-        addLike(resource);
-        // glyphicon-heart.addClass('liked');
-      } else {
-        removeLike(resource);
-        // glyphicon-heart.removeClass('liked');
-      }
-    });
+function doesUserLikeResource(user_id, likes) {
+  var alreadyLiked = false;
+  for (var i in likes) {
+    if (user_id === likes[i].user_id) {
+      alreadyLiked = true;
+    }
   }
+  return alreadyLiked;
+}
 
-  //Send ajax request to write to likes table
-  var addLike = function (resource) {
-    var resource_id = resource.data('resource-data').resource_id;
-    $.ajax({
-      method: "POST",
-      url: "/api/resources/" + resource_id + "/likes",
-    }).done( function (result) {
-      console.log(result);
-    })
+function updateLikesCounter (resource) {
+  var totalOfLikes = resource.likes.length;
+  return totalOfLikes;
+}
 
-    // function updateLikesCounter (likes) {
-    //
-    //   var totalOfLikes = likes.length;
-    //
-    //   $("#totalOfLikes").text(totalOfLikes);
-    // }
-    //
-    // //function that load likes from db, and show on screen
-    // function loadLikes () {
-    //   var resource_id = resource.data('resource-data').resource_id;
-    //   // Get all comments for the resource
-    //   $.getJSON("/api/resources/" + resource_id + "/like")
-    //   .done(function (likes) {
-    //     updateLikesCounter(likes);
-    //   })
-    //   .fail(function () {
-    //     console.log("error");
-    //   })
-    // }
-    //
-    // //start the page showing the total likes
-    // loadLikes();
-  }
+//Send ajax request to write to likes table
+var addLike = function (resource_data) {
+  var resource_id = resource_data.resource_id;
+  $.ajax({
+    method: "POST",
+    url: "/api/resources/" + resource_id + "/likes",
+  }).done( function (result) {
+      $('#resource-' + resource_id).data('resource-data').likes.push(result[0]);
+      var new_data = $('#resource-' + resource_id).data('resource-data');
+      $('#resource-' + resource_id).find(".totalOfLikes").text(updateLikesCounter(new_data));
+  })
+}
 
-  var removeLike = function (resource) {
-    var resource_id = resource.data('resource-data').resource_id;
+//Send ajax request to delete to likes table
+var removeLike = function (resource_data) {
+    var resource_id = resource_data.resource_id;
+    var user_id = JSON.parse(localStorage.getItem("userInfo")).id;
     $.ajax({
       method: "DELETE",
-      url: "/api/resources/" + resource_id + "/likes",
-    }).done( function (result) {
-      console.log(result);
+      url: "/api/resources/" + resource_id + "/likes"
+    })
+    .done( function (result) {
+        var likesArray = $('#resource-' + resource_id).data('resource-data').likes;
+         for (var i in likesArray) {
+            if(likesArray[i].user_id === user_id) {
+              likesArray.splice(i, 1);
+            }
+          }
+        var new_data = $('#resource-' + resource_id).data('resource-data');
+        $('#resource-' + resource_id).find(".totalOfLikes").text(updateLikesCounter(new_data));
     });
   }
 
 
 
-  $(document).ready(function () {
-    likeButtonHandler();
+$(document).ready(function () {
+// console.log("clik: ", $(this).closest('.resource-container').data('resource-data'))
+  //start the page showing the total likes
+  // updateLikesCounter($(this).closest('.resource-container').data('resource-data'));
+
+
+  $('#all-resources').on('click', '.glyphicon-heart', function (event) {
+    var resource_data = $(this).closest('.resource-container').data('resource-data');
+    var likes = resource_data.likes;
+    var user_id = JSON.parse(localStorage.getItem("userInfo")).id;
+
+    if (doesUserLikeResource(user_id, likes)) {
+      removeLike(resource_data);
+      $(this).removeClass('liked');
+    } else {
+      addLike(resource_data);
+      $(this).addClass('liked');
+    }
   });
+
 
 })

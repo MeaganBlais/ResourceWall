@@ -43,7 +43,7 @@ var createResourceElement = function (resource) {
         <span class="avg_rating"></span>
       </span>
       <span class="heart-comments">
-        <span class="likes"><i class="glyphicon glyphicon-heart"></i><span id="totalOfLikes"></span>4</span>
+        <span class="likes"><i class="glyphicon glyphicon-heart"></i><span class="totalOfLikes"></span></span>
         <span class="comments"><i class="glyphicon glyphicon-comment"></i> 2</span>
       </span>
     </span>
@@ -62,7 +62,7 @@ var createResourceElement = function (resource) {
 
   // Setting the parameters of star ratings
   $resource.find(".rateYo").rateYo("option", "starWidth", "20px"); // Size of the stars
-  $resource.find(".rateYo").rateYo("option", "ratedFill", "#E74C3C"); // Color of the rated stars
+  $resource.find(".rateYo").rateYo("option", "ratedFill", "#d8505c"); // Color of the rated stars
   $resource.find(".rateYo").rateYo("option", "fullStar", true); // Setting ratings as full star
   $resource.find(".rateYo").rateYo("option", "readOnly", !checkLogin()); //Setting read only if user is not logged in
 
@@ -85,6 +85,19 @@ var createResourceElement = function (resource) {
     var rating = analyseRating(resource, new_rating, this);
 
   });
+
+  //Set the total of likes
+  $resource.find(".totalOfLikes").text(updateLikesCounter(resource));
+
+
+  //set the color of the heart
+  if (user_id) {
+    if (doesUserLikeResource(user_id, resource.likes)) {
+      $resource.find(".glyphicon-heart").addClass('liked');
+    } else {
+      $resource.find(".glyphicon-heart").removeClass('liked');
+    }
+  }
 
   return $resource;
 }

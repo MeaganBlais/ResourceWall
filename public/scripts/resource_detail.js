@@ -103,7 +103,7 @@ function loadDataResource(resource_id) {
 
       // Setting the parameters of star ratings
       $(".rateYo").rateYo("option", "starWidth", "20px"); // Size of the stars
-      $(".rateYo").rateYo("option", "ratedFill", "#E74C3C"); // Color of the rated stars
+      $(".rateYo").rateYo("option", "ratedFill", "#d8505c"); // Color of the rated stars
       $(".rateYo").rateYo("option", "fullStar", true); // Setting ratings as full star
       $(".rateYo").rateYo("option", "readOnly", !checkLogin()); //Setting read only if user is not logged in
 

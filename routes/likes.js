@@ -6,7 +6,7 @@ const router  = express.Router({mergeParams: true});
 module.exports = (knex) => {
 
   router.post("/", (req, res) => {
-          console.log(req.params.resource_id)
+
     knex('likes')
     .returning('*')
     .insert({
@@ -16,6 +16,20 @@ module.exports = (knex) => {
     .then( (result) => {
       res.json(result);
     })
+  });
+
+  router.delete("/", (req, res) => {
+
+    knex('likes')
+      .where({'user_id': req.session.user.id, 'resource_id': req.params.resource_id})
+      .del()
+      .then( (result) => {
+        res.status(200).send();
+      })
+      .catch((err) => {
+        throw err;
+      })
   })
+
   return router;
 }

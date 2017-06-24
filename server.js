@@ -55,10 +55,8 @@ app.use("/api/resources", resourcesRoutes(knex));
 app.use("/api/resources/:resource_id", resourceDetailsRoutes(knex));
 app.use("/api/resources/:resource_id/comments", resourcesComments(knex));
 app.use("/api/resources/:resource_id/ratings", ratingsRoutes(knex));
-
-// WE HAVE TO ANALYSE WHICH ONE IS THE CORRECT
 app.use("/api/resources/:resource_id/likes", likeRoutes(knex));
-app.use("/api/resources/:resource_id/like", likeRoutes(knex));
+
 
 
 // Home page
