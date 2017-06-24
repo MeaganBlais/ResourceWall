@@ -20,7 +20,7 @@ var createResourceElement = function (resource) {
 
   //header
   var resourceHeader = $("<header>").append(`
-    <h1>${resource.title}</h1>
+    <h1><a href="${resource.URL}">${resource.title}</a></h1>
   `);
 
   //body
