@@ -1,4 +1,21 @@
 $(document).ready(function () {
+
+  // watching for like/unlike event
+  var likeButtonHandler = function () {
+    $('#all-resources').on('click', '.glyphicon-heart', function (event) {
+      console.log('click', $(this).closest('.resource-container'));
+      console.log('user', data.resource_id);
+      var resource = $(this).closest('.resource-container');
+      if (doesUserLikeResource(user.id, resource_data)) {
+        addLike(resource);
+        // glyphicon-heart.addClass('liked');
+      } else {
+        removeLike(resource);
+        // glyphicon-heart.removeClass('liked');
+      }
+    });
+  }
+
   //Send ajax request to write to likes table
   var addLike = function (resource) {
     var resource_id = resource.data('resource-data').resource_id;
@@ -31,21 +48,19 @@ $(document).ready(function () {
     //
     // //start the page showing the total likes
     // loadLikes();
-
-
-
-
-
   }
 
-  // watching for like event
-  var likeButtonHandler = function () {
-    $('#all-resources').on('click', '.glyphicon-heart', function (event) {
-      // console.log('click', $(this).closest('.resource-container'));
-      var resource = $(this).closest('.resource-container');
-      addLike(resource);
+  var removeLike = function (resource) {
+    var resource_id = resource.data('resource-data').resource_id;
+    $.ajax({
+      method: "DELETE",
+      url: "/api/resources/" + resource_id + "/likes",
+    }).done( function (result) {
+      console.log(result);
     });
   }
+
+
 
   $(document).ready(function () {
     likeButtonHandler();
