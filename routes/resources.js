@@ -69,6 +69,20 @@ module.exports = (knex) => {
         return Promise.all(promises);
       })
       .then((results) => {
+        let promises = [];
+        for (let resource of results) {
+          promises.push(knex('comments')
+            .select()
+            .where('resource_id', resource.resource_id)
+            .then((comments) => {
+              //console.log(results);
+              resource['comments'] = comments.length;
+              return resource;
+            }));
+        }
+        return Promise.all(promises);
+      })
+      .then((results) => {
         res.status(200).send(results);
       })
       .catch( (err) => {

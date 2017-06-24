@@ -10,6 +10,7 @@ var loadResources = function () {
 }
 
 var createResourceElement = function (resource) {
+  console.log(resource);
   var $resource = $(`<article id='resource-${resource.resource_id}'>`).addClass('resource-container');
   var user_id = localStorage.getItem("userInfo") ? JSON.parse(localStorage.getItem("userInfo")).id : '';
 
