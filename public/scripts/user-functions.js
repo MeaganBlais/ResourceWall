@@ -12,7 +12,8 @@ var registerFormHandler = function () {
       success: (response) => {
         console.log("Browser thinks it works");
         localStorage.setItem("userInfo", JSON.stringify(response));
-        $(location).attr('href','/');      }
+        $(location).attr('href','/');
+      }
     });
 
   })
@@ -33,7 +34,8 @@ var loginFormHandler = function () {
         console.log("Browser thinks it works");
         console.log(response);
         localStorage.setItem("userInfo", JSON.stringify(response));
-        navLogin();
+        $(location).attr('href','/');
+        // navLogin();
       }
     });
 
@@ -49,8 +51,9 @@ var logoutButton = function () {
       url: "/api/users/logout",
       method: "POST",
       success: () => {
-        navLogout();
+        // navLogout();
         localStorage.clear();
+        $(location).attr('href','/');
       }
     })
   })

@@ -73,6 +73,7 @@ var createResourceElement = function (resource) {
 
     //exits function if user is not logged in
     if (!checkLogin()) {
+      console.log("not logged in!");
       return;
     }
 
