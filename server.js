@@ -18,6 +18,7 @@ const cookieSession = require('cookie-session');
 // Seperated Routes for each Resource
 const usersRoutes = require("./routes/users");
 const resourcesRoutes = require("./routes/resources");
+const resourceDetailsRoutes = require("./routes/resource_details");
 const resourcesComments = require("./routes/comments");
 const likeRoutes = require("./routes/likes");
 const ratingsRoutes = require("./routes/ratings");
@@ -51,6 +52,7 @@ app.use(express.static("public"));
 // Mount all resource routes
 app.use("/api/users", usersRoutes(knex));
 app.use("/api/resources", resourcesRoutes(knex));
+app.use("/api/resources/:resource_id", resourceDetailsRoutes(knex));
 app.use("/api/resources/:resource_id/comments", resourcesComments(knex));
 app.use("/api/resources/:resource_id/ratings", ratingsRoutes(knex));
 
@@ -92,7 +94,7 @@ app.get("/resources/:resource_id", (req, res) => {
   knex('resources')
     .join('users', 'users.id', '=', 'resources.user_id')
     .where('resources.id', resource_id)
-    .select('resources.id', 'resources.URL', 'resources.title', 'resources.description', 'users.user_name', 'users.id', 'users.avatar_URL')
+    .select('resources.id', 'resources.URL', 'resources.title', 'resources.description', 'users.user_name', 'users.id as user_id', 'users.avatar_URL')
     .then((results) => {
 
       //render the page to show the resource details

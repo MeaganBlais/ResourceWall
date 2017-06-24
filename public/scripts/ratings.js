@@ -14,6 +14,7 @@ function setAvgRating(data) {
     }
     avg = Math.round(sum / totalOfRatings);
   }
+
   return avg;
 
 };
@@ -21,7 +22,6 @@ function setAvgRating(data) {
 
 function getUserRating (user_id, data) {
   var user_rating = 0;
-
 
   if (data.ratings.length === 0) {
     //The resource has no ratings yet
@@ -35,6 +35,7 @@ function getUserRating (user_id, data) {
 
       if (data.ratings[i].user_id === user_id) {
         //user logged in has rated the resource, get the rating
+
         return data.ratings[i].rating;
       }
     }
