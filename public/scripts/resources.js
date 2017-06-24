@@ -45,7 +45,7 @@ var createResourceElement = function (resource) {
       </span>
       <span class="heart-comments">
         <span class="likes"><i class="glyphicon glyphicon-heart"></i><span class="totalOfLikes"></span></span>
-        <span class="comments"><i class="glyphicon glyphicon-comment"></i> 2</span>
+        <span class="comments"><i class="glyphicon glyphicon-comment"></i> <span class="totalOfComments"></span></span>
       </span>
     </span>
   `);
@@ -90,7 +90,6 @@ var createResourceElement = function (resource) {
   //Set the total of likes
   $resource.find(".totalOfLikes").text(updateLikesCounter(resource));
 
-
   //set the color of the heart if the user is logged in
   if (user_id) {
     if (doesUserLikeResource(user_id, resource.likes)) {
@@ -99,6 +98,9 @@ var createResourceElement = function (resource) {
       $resource.find(".glyphicon-heart").removeClass('liked');
     }
   }
+
+  //Set the total of comments
+  $resource.find(".totalOfComments").text(resource.comments);
 
   return $resource;
 }
