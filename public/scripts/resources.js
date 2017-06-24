@@ -64,6 +64,7 @@ var createResourceElement = function (resource) {
   $resource.find(".rateYo").rateYo("option", "starWidth", "20px"); // Size of the stars
   $resource.find(".rateYo").rateYo("option", "ratedFill", "#E74C3C"); // Color of the rated stars
   $resource.find(".rateYo").rateYo("option", "fullStar", true); // Setting ratings as full star
+  $resource.find(".rateYo").rateYo("option", "readOnly", !checkLogin()); //Setting read only if user is not logged in
 
   //Set the average of ratings
   $resource.find(".avg_rating").text(setAvgRating(resource));

@@ -1,18 +1,140 @@
-$(document).ready( function() {
 
-var data = {
-  URL: "url",
-  avatar_URL: "avatar",
-  description: "description",
-  resource_id: "1",
-  title: "test",
-  user_id: "2",
-  user_name: "owner",
-  ratings: [
-      // { user_id: JSON.parse(localStorage.getItem("userInfo")).id, resource_id: "1", rating_id: "1", rating: "1"},
-      { user_id: "2", resource_id: "1", rating_id: "2", rating: "4"}
-    ]
+//function that takes in a comment object
+//and return a comment <article> element containing the entire HTML structure of the comment
+function createCommentElement (commentData) {
+
+  //get how many days between today and the date when the comment was created
+  var dateCreated = new Date(commentData.created_at);
+  var dateToday = new Date();
+
+  var timeDiff = Math.abs(dateToday.getTime() - dateCreated.getTime());
+  var diffDays = (Math.ceil(timeDiff / (1000 * 3600 * 24)) -1);
+
+  if (diffDays === 0) {
+    diffDays = "Today";
+  } else {
+    diffDays += " day(s) ago"
+  }
+
+
+  //create the structure of comment to be included in the html
+  var comment = (`<article  class="comment_container">
+                  <header>
+                    <img class="avatar" src ="${commentData.avatar_URL}">
+                    <span class="input_user" data-id='${commentData.user_id}'>${commentData.user_name}</span>
+                  </header>
+                  <div class="read-comment">
+                    <span>${commentData.comment}</span>
+                  </div>
+                  <footer>
+                    <span class="daysAgo">${diffDays}</span>
+                  </footer>
+                </article>`);
+
+  //return the structure to append to html
+  return comment;
+
 }
+
+//function that take all comments for the resource, call the createCommentElement function above,
+//and use the returned jQuery object to append each one to the #show_comments_container section
+function renderComments (comments) {
+
+  //define a variable to receive the html block for the comment
+  var comment;
+
+  //clear the container before to read all comments
+  $("#show_comments_container").empty();
+
+
+  //if there are any comment, loops through comments
+  //calls createCommentElement for each comment and takes return value and appends it to the comments container
+  if (comments.length > 0) {
+    for (var i in comments) {
+      comment = createCommentElement(comments[i]);
+      $('#show_comments_container').append(comment);
+    }
+  }
+
+};
+
+//function that update comments counter
+function updateCommentsCounter (comments) {
+
+  var totalOfComments = comments.length;
+
+  $("#totalOfComments").text(totalOfComments);
+
+}
+
+//function that load comments from db, and show on screen (call renderComments function)
+function loadComments (resource_id) {
+
+  // Get all comments for the resource
+  $.getJSON("/resources/" + resource_id + "/comments")
+    .done(function (resource) {
+            renderComments(resource);
+            updateCommentsCounter(resource);
+    })
+    .fail(function () {
+      console.log("error");
+    })
+}
+
+//function that load all details for the resource, to compose the data on html
+function loadDataResource(resource_id) {
+
+  $.ajax({
+    url: '/api/resources/' + resource_id,
+    method: 'GET',
+    success: function (results) {
+
+      $(`#resource-${resource_id}`).data('resource-data', results[0]);
+
+      var user_id = localStorage.getItem("userInfo") ? JSON.parse(localStorage.getItem("userInfo")).id : '';
+
+      // var data = results[0];
+
+      // Setting the initial rating
+      $(".rateYo").rateYo({
+        rating: getUserRating(user_id, results[0]),
+        fullStar: true
+      });
+
+      // Setting the parameters of star ratings
+      $(".rateYo").rateYo("option", "starWidth", "20px"); // Size of the stars
+      $(".rateYo").rateYo("option", "ratedFill", "#E74C3C"); // Color of the rated stars
+      $(".rateYo").rateYo("option", "fullStar", true); // Setting ratings as full star
+      $(".rateYo").rateYo("option", "readOnly", !checkLogin()); //Setting read only if user is not logged in
+
+      //Set the average of ratings
+      $(".avg_rating").text(setAvgRating(results[0]));
+
+      // Getting the rating selected by the user
+      $(".rateYo").rateYo("option", "onSet", function () {
+
+        //exits function if user is not logged in
+        if (!checkLogin()) {
+          return;
+        }
+
+        //Get the rating clicked
+        var new_rating = $(".rateYo").rateYo("rating");
+        var data = $(`#resource-${results[0].resource_id}`).data('resource-data');
+
+        //Call a function to anlyse the user action
+        analyseRating(data, new_rating);
+
+      });
+
+      return;
+    }
+  });
+}
+
+
+
+$(document).ready( function() {
 
   // Variables to get information about the user and the resource id
   var resource_id = $('#url').data('id')
@@ -24,40 +146,8 @@ var data = {
     var user_avatar = user.avatar_URL;
   }
 
-  // Setting the initial rating
-  $(".rateYo").rateYo({
-    rating: getUserRating(user_id, data),
-    fullStar: true
-  });
 
-  // Setting the parameters of star ratings
-  $(".rateYo").rateYo("option", "starWidth", "20px"); // Size of the stars
-  $(".rateYo").rateYo("option", "ratedFill", "#E74C3C"); // Color of the rated stars
-  $(".rateYo").rateYo("option", "fullStar", true); // Setting ratings as full star
-
-  //Set the average of ratings
-  $(".avg_rating").text(setAvgRating(data));
-
-   
-  // Getting the rating selected by the user
-  $(".rateYo").rateYo("option", "onSet", function () {
-
-    //exits function if user is not logged in
-    if (!checkLogin()) {
-      return;
-    }
-    //Get the rating clicked
-    var new_rating = $(".rateYo").rateYo("rating");
-
-    //Call a function to anlyse the user action
-    analyseRating(data, new_rating);
-
-  });
-
-
-
-
-
+  loadDataResource(resource_id);
 
 
   //set the user information on comment container
@@ -115,90 +205,8 @@ var data = {
   });
 
 
-  //function that takes in a comment object
-  //and return a comment <article> element containing the entire HTML structure of the comment
-  function createCommentElement (commentData) {
-
-    //get how many days between today and the date when the comment was created
-    var dateCreated = new Date(commentData.created_at);
-    var dateToday = new Date();
-
-    var timeDiff = Math.abs(dateToday.getTime() - dateCreated.getTime());
-    var diffDays = (Math.ceil(timeDiff / (1000 * 3600 * 24)) -1);
-
-    if (diffDays === 0) {
-      diffDays = "Today";
-    } else {
-      diffDays += " day(s) ago"
-    }
-
-
-    //create the structure of comment to be included in the html
-    var comment = (`<article  class="comment_container">
-                    <header>
-                      <img class="avatar" src ="${commentData.avatar_URL}">
-                      <span class="input_user" data-id='${commentData.user_id}'>${commentData.user_name}</span>
-                    </header>
-                    <div class="read-comment">
-                      <span>${commentData.comment}</span>
-                    </div>
-                    <footer>
-                      <span class="daysAgo">${diffDays}</span>
-                    </footer>
-                  </article>`);
-
-    //return the structure to append to html
-    return comment;
-
-  }
-
-  //function that take all comments for the resource, call the createCommentElement function above,
-  //and use the returned jQuery object to append each one to the #show_comments_container section
-  function renderComments (comments) {
-
-    //define a variable to receive the html block for the comment
-    var comment;
-
-    //clear the container before to read all comments
-    $("#show_comments_container").empty();
-
-
-    //if there are any comment, loops through comments
-    //calls createCommentElement for each comment and takes return value and appends it to the comments container
-    if (comments.length > 0) {
-      for (var i in comments) {
-        comment = createCommentElement(comments[i]);
-        $('#show_comments_container').append(comment);
-      }
-    }
-
-  };
-
-  //
-  function updateCommentsCounter (comments) {
-
-    var totalOfComments = comments.length;
-
-    $("#totalOfComments").text(totalOfComments);
-
-  }
-
-  //function that load comments from db, and show on screen (call renderComments function)
-  function loadComments () {
-
-    // Get all comments for the resource
-    $.getJSON("/resources/" + resource_id + "/comments")
-      .done(function (resource) {
-              renderComments(resource);
-              updateCommentsCounter(resource);
-      })
-      .fail(function () {
-        console.log("error");
-      })
-  }
-
   //start the page showing the comments
-  loadComments();
+  loadComments(resource_id);
 
 })
 
