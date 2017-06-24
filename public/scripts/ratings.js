@@ -54,7 +54,9 @@ function analyseRating(data, new_rating) {
   //Get the actual user rating
   var user_rating = getUserRating(user_id, data);
 
-  var toReturn
+  // if (Number(new_rating) === 0) {
+  //   return;
+  // }
 
   if (Number(user_rating) === 0) {
     //user has not rating yet. send a POST request.
@@ -73,24 +75,24 @@ function analyseRating(data, new_rating) {
 
   } else if (Number(user_rating) === Number(new_rating)) {
     //user has give the same rating . send a DELETE request.
-    $.ajax({
-        method: "DELETE",
-        url: "/api/resources/" + resource_id + "/ratings"
-      })
-        .done(function(result) {
-          var ratingsArray = $('#resource-' + resource_id).data('resource-data').ratings;
+    // $.ajax({
+    //     method: "DELETE",
+    //     url: "/api/resources/" + resource_id + "/ratings"
+    //   })
+    //     .done(function(result) {
+    //       var ratingsArray = $('#resource-' + resource_id).data('resource-data').ratings;
 
-          for (var rating in ratingsArray) {
-            if(ratingsArray[rating].user_id === user_id) {
-              ratingsArray.splice(rating, 1);
-            }
-          }
+    //       for (var rating in ratingsArray) {
+    //         if(ratingsArray[rating].user_id === user_id) {
+    //           ratingsArray.splice(rating, 1);
+    //         }
+    //       }
 
-          var new_data = $('#resource-' + resource_id).data('resource-data');
-          $('#resource-' + resource_id).find(".avg_rating").text(setAvgRating(new_data));
-        })
+    //       var new_data = $('#resource-' + resource_id).data('resource-data');
+    //       $('#resource-' + resource_id).find(".avg_rating").text(setAvgRating(new_data));
+    //     })
 
-    $(".rateYo").rateYo("rating", 0)
+    // $(".rateYo").rateYo(" ", 0)
 
   } else {
     //user wnat to change the rating . send a PUT request.
@@ -113,8 +115,6 @@ function analyseRating(data, new_rating) {
         })
 
   }
-
-  return toReturn;
 
 }
 
