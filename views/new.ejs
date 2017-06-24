@@ -13,13 +13,15 @@
 
   <!-- External Javascript -->
   <script type="text/javascript" src="/vendor/jquery-3.0.0.js"></script>
-  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script>
   <script type="text/javascript" src="/vendor/typeahead.js"></script>
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script>
+
 
   <!-- Our Javascript -->
   <script type="text/javascript" src="/scripts/app.js"></script>
   <script type="text/javascript" src="/scripts/user-functions.js"></script>
   <script type="text/javascript" src="/scripts/char-counter.js"></script>
+  <script type="text/javascript" src="/scripts/tags.js"></script>
 </head>
 
 <body>
@@ -33,25 +35,31 @@
 
         <div class="input-group">
           <span class="input-group-addon">URL</span>
-          <input type="url" name="URL" class="form-control" placeholder="Resource URL">
+          <input id="URL" type="url" name="URL" class="form-control" placeholder="Resource URL">
         </div>
         <div class="input-group">
           <span class="input-group-addon">Title</span>
-          <input type="text" name="title" class="form-control" placeholder="Title">
+          <input id="title" type="text" name="title" class="form-control" placeholder="Title">
         </div>
         <div class="input-group">
           <span class="input-group-addon">Description</span>
-          <textarea type="text" name="description" class="form-control" placeholder="Description"></textarea>
+          <textarea id="description" type="text" name="description" class="form-control" placeholder="Description"></textarea>
         </div>
-        <div class="counter">
+         <div class="counter">
           <span id="message"></span> <!-- flash messages will be shown here -->
           <span>255</span>
         </div>
-        <div class="container tag-container">
-          Test
+        <div class="tag-container">
+          <!-- Tags appended here-->
         </div>
-        <button class="btn btn-default" id="submit-resource-btn" type="submit">Submit</button>
-
+        <button class="btn btn-default pull-right" id="submit-resource-btn" type="submit">Submit</button>
+      </form>
+      <form id="tag-form">
+        <div class="input-group">
+          <span class="input-group-addon">Tags</span>
+          <input id="tag-search" type="text" name="tags" class="form-control" placeholder="Enter tags..." autocomplete="off">
+          <button type="submit" class="btn btn-default hidden-button">+</button>
+        </div>
 
       </form>
     </div>

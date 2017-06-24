@@ -6,6 +6,7 @@ const router  = express.Router();
 module.exports = (knex) => {
 
   router.post("/", (req, res) => {
+    console.log(req.body);
     const newResource = {
       // id: , //needs to be randomly generated
       user_id: req.session.user.id,
