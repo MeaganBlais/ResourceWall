@@ -90,7 +90,7 @@ var createResourceElement = function (resource) {
   $resource.find(".totalOfLikes").text(updateLikesCounter(resource));
 
 
-  //set the color of the heart
+  //set the color of the heart if the user is logged in
   if (user_id) {
     if (doesUserLikeResource(user_id, resource.likes)) {
       $resource.find(".glyphicon-heart").addClass('liked');

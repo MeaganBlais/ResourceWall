@@ -50,9 +50,6 @@ var removeLike = function (resource_data) {
 
 
 $(document).ready(function () {
-// console.log("clik: ", $(this).closest('.resource-container').data('resource-data'))
-  //start the page showing the total likes
-  // updateLikesCounter($(this).closest('.resource-container').data('resource-data'));
 
 
   $('#all-resources').on('click', '.glyphicon-heart', function (event) {
