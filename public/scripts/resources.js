@@ -71,6 +71,11 @@ var createResourceElement = function (resource) {
   // Getting the rating selected by the user
   $resource.find(".rateYo").rateYo("option", "onSet", function () {
 
+    //exits function if user is not logged in
+    if (!checkLogin()) {
+      return;
+    }
+
     //Get the rating clicked
     var new_rating = $resource.find(".rateYo").rateYo("rating");
 

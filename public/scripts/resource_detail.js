@@ -9,17 +9,20 @@ var data = {
   user_id: "2",
   user_name: "owner",
   ratings: [
-      { user_id: JSON.parse(localStorage.getItem("userInfo")).id, resource_id: "1", rating_id: "1", rating: "1"},
+      // { user_id: JSON.parse(localStorage.getItem("userInfo")).id, resource_id: "1", rating_id: "1", rating: "1"},
       { user_id: "2", resource_id: "1", rating_id: "2", rating: "4"}
     ]
 }
 
   // Variables to get information about the user and the resource id
   var resource_id = $('#url').data('id')
-  var user = JSON.parse(localStorage.getItem("userInfo"))
-  var user_id = user.id;
-  var user_name = user.user_name;
-  var user_avatar = user.avatar_URL;
+
+  if(checkLogin()) {
+    var user = JSON.parse(localStorage.getItem("userInfo"))
+    var user_id = user.id;
+    var user_name = user.user_name;
+    var user_avatar = user.avatar_URL;
+  }
 
   // Setting the initial rating
   $(".rateYo").rateYo({
@@ -39,6 +42,10 @@ var data = {
   // Getting the rating selected by the user
   $(".rateYo").rateYo("option", "onSet", function () {
 
+    //exits function if user is not logged in
+    if (!checkLogin()) {
+      return;
+    }
     //Get the rating clicked
     var new_rating = $(".rateYo").rateYo("rating");
 

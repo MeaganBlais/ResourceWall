@@ -49,6 +49,7 @@ function getUserRating (user_id, data) {
 function analyseRating(data, new_rating) {
 
   var resource_id = data.resource_id;
+
   var user_id = JSON.parse(localStorage.getItem("userInfo")).id;
 
   //Get the actual user rating
