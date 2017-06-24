@@ -16,7 +16,7 @@ exports.seed = function(knex, Promise) {
         return knex('ratings').del()
       })
       .then( () => {
-        return knex('resources_categories')
+        return knex('resources_categories').del()
       })
       .then( () => {
         return knex('resources').del()

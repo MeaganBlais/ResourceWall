@@ -10,13 +10,14 @@ module.exports = (knex) => {
     let rating = {
       user_id: req.session.user.id,
       resource_id: req.params.resource_id,
-      rating: 3,
+      rating: req.body.rating,
     }
 
     knex('ratings')
       .insert(rating)
+      .returning(['id', 'user_id', 'resource_id', 'rating'])
       .then((results) => {
-        res.status(200).send();
+        res.status(200).send(results);
       })
       .catch( (err) => {
         throw err;
@@ -44,7 +45,7 @@ module.exports = (knex) => {
         resource_id: req.params.resource_id,
         user_id: req.session.user.id
       })
-      .update({rating: 3})
+      .update({rating: req.body.rating})
       .then((result) => {
         res.status(200).send();
       })

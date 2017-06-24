@@ -10,10 +10,13 @@ var loadResources = function () {
 }
 
 var createResourceElement = function (resource) {
-  var $resource = $('<article>').addClass('resource-container');
+  var $resource = $(`<article id='resource-${resource.resource_id}'>`).addClass('resource-container');
+
+  var user = JSON.parse(localStorage.getItem("userInfo"))
+  var user_id = user.id;
 
   $resource.data('resource-data', resource);
-  console.log(resource);
+
   //header
   var resourceHeader = $("<header>").append(`
     <h1>${resource.title}</h1>
@@ -31,12 +34,15 @@ var createResourceElement = function (resource) {
       <span>${resource.user_name}</span>
     </span>
     <span class="icons pull-right">
-      <span class="stars">
-        <i class="glyphicon glyphicon-star"></i>
-        <i class="glyphicon glyphicon-star"></i>
-        <i class="glyphicon glyphicon-star"></i>
-        <i class="glyphicon glyphicon-star"></i>
-        <i class="glyphicon glyphicon-star"></i>
+      <span class="ratings">
+        <div class="rateYo">
+          <input type="radio" name="example" class="rating" value="1" />
+          <input type="radio" name="example" class="rating" value="2" />
+          <input type="radio" name="example" class="rating" value="3" />
+          <input type="radio" name="example" class="rating" value="4" />
+          <input type="radio" name="example" class="rating" value="5" />
+        </div>
+        <span class="avg_rating"></span>
       </span>
       <span class="heart-comments">
         <span class="likes"><i class="glyphicon glyphicon-heart"></i> 4</span>
@@ -48,6 +54,32 @@ var createResourceElement = function (resource) {
   $resource.append(resourceHeader);
   $resource.append(resourceBody);
   $resource.append(resourceFooter);
+
+  // Setting the initial rating
+  $resource.find(".rateYo").rateYo({
+    rating: getUserRating(user_id, resource),
+    fullStar: true
+  });
+
+
+  // Setting the parameters of star ratings
+  $resource.find(".rateYo").rateYo("option", "starWidth", "20px"); // Size of the stars
+  $resource.find(".rateYo").rateYo("option", "ratedFill", "#E74C3C"); // Color of the rated stars
+  $resource.find(".rateYo").rateYo("option", "fullStar", true); // Setting ratings as full star
+
+  //Set the average of ratings
+  $resource.find(".avg_rating").text(setAvgRating(resource));
+
+  // Getting the rating selected by the user
+  $resource.find(".rateYo").rateYo("option", "onSet", function () {
+
+    //Get the rating clicked
+    var new_rating = $resource.find(".rateYo").rateYo("rating");
+
+    //Call a function to anlyse the user action
+    var rating = analyseRating(resource, new_rating, this);
+
+  });
 
   return $resource;
 }
@@ -105,4 +137,6 @@ var noResultsDisplay = function (num) {
 $(document).ready(function () {
   loadResources();
   searchBarHandler();
+
+
 });
