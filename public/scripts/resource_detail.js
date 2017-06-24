@@ -90,6 +90,7 @@ function loadDataResource(resource_id) {
     success: function (results) {
 
       $(`#resource-${resource_id}`).data('resource-data', results[0]);
+      var data = $(`#resource-${resource_id}`).data('resource-data');
 
       var user_id = localStorage.getItem("userInfo") ? JSON.parse(localStorage.getItem("userInfo")).id : '';
 
@@ -125,7 +126,22 @@ function loadDataResource(resource_id) {
         //Call a function to anlyse the user action
         analyseRating(data, new_rating);
 
+
+
       });
+
+        //Set the total of likes
+        $(".totalOfLikes").text(updateLikesCounter(data));
+
+        //set the color of the heart if the user is logged in
+        if (user_id) {
+          if (doesUserLikeResource(user_id, data.likes)) {
+            $(".glyphicon-heart").addClass('liked');
+          } else {
+            $(".glyphicon-heart").removeClass('liked');
+          }
+        }
+
 
       return;
     }
@@ -144,6 +160,8 @@ $(document).ready( function() {
     var user_id = user.id;
     var user_name = user.user_name;
     var user_avatar = user.avatar_URL;
+
+    $(".comment_container").removeClass('hidden');
   }
 
 
@@ -158,7 +176,7 @@ $(document).ready( function() {
 
   //event listener to submit button
   $("#input-comment-btn").on("click", function(event) {
-
+console.log("clicou")
     //prevent to change the page
     event.preventDefault();
 
@@ -188,12 +206,12 @@ $(document).ready( function() {
       $textarea.focus();
 
     } else {
-
+console.log("vou incluir")
       //validations are ok, comment will be send, and the area for comments will be re-loaded
       $.post(`/api/resources/${resource_id}/comments`, $data)
 
         .done(function () {
-                loadComments();
+                loadComments(resource_id);
               });
 
       //hidden the message if it is shown, clear the textarea, and reset the char-counter
