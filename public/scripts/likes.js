@@ -53,6 +53,7 @@ $(document).ready(function () {
 
 
   $('#all-resources').on('click', '.glyphicon-heart', function (event) {
+
     var resource_data = $(this).closest('.resource-container').data('resource-data');
     var likes = resource_data.likes;
     var user_id = JSON.parse(localStorage.getItem("userInfo")).id;

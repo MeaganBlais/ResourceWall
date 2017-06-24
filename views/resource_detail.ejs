@@ -22,6 +22,7 @@
     <script type="text/javascript" src="/scripts/user-functions.js"></script>
     <script type="text/javascript" src="/scripts/resource_detail.js"></script>
     <script type="text/javascript" src="/scripts/char-counter.js"></script>
+    <script type="text/javascript" src="/scripts/likes.js"></script>
     <script type="text/javascript" src="/scripts/ratings.js"></script>
 
 
@@ -34,7 +35,7 @@
 
     <% include partials/_nav %>
 
-    <div class="container">
+    <div class="container" id="all-resources">
     <!-- Example Resource -->
       <article class="resource-container" id='resource-<%= id %>' data-resource-data="test">
         <header>
@@ -60,7 +61,7 @@
               <span class="avg_rating"></span>
             </span>
             <span class="heart-comments">
-              <span class="likes"><i class="glyphicon glyphicon-heart"></i> <span id="totalOfLikes"></span>4</span>
+              <span class="likes"><i class="glyphicon glyphicon-heart"></i> <span class="totalOfLikes"></span></span>
               <span class="comments"><i class="glyphicon glyphicon-comment"></i> <span id="totalOfComments">2</span></span>
             </span>
           </span>
@@ -71,7 +72,7 @@
         </footer>
       </article>
 
-      <article  class="comment_container">
+      <article  class="comment_container hidden">
         <form action="/api/resources/<%= id %>/comments" method=POST id="new-comment">
           <header>
             <img class="avatar" id="avatar_comment" src ="https://www.fillmurray.com/200/300">
