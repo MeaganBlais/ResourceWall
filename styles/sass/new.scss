@@ -1,6 +1,7 @@
 .new-container {
   background-color: #FFFFFF;
   padding: 20px;
+  overflow: auto;
 
   .input-group {
     margin: 15px 0;
@@ -18,19 +19,18 @@
     }
   }
   #submit-resource-btn {
-    float: right;
+
   }
 
   #message{
     color: $flash-message-color;
-    float: left;
-    margin: 0;
+    //float: left;
+    margin: 0 10px;
     font-size: $flash-message-size;
   }
 
   .counter {
     font-size: $flash-message-size;
-    line-height: 3;
     float: right;
     padding-right: 10px;
   }
@@ -42,4 +42,8 @@
   #selectbox {
     overflow: scroll;
   }
+}
+
+.tag-container {
+  margin-top: 50px;
 }

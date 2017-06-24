@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <title>Home Page</title>
+  <title>New Resource</title>
 
   <!-- External Stylesheets -->
   <link rel="stylesheet" href="/vendor/normalize-4.1.1.css" type="text/css" />
@@ -14,6 +14,7 @@
   <!-- External Javascript -->
   <script type="text/javascript" src="/vendor/jquery-3.0.0.js"></script>
   <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script>
+  <script type="text/javascript" src="/vendor/typeahead.js"></script>
 
   <!-- Our Javascript -->
   <script type="text/javascript" src="/scripts/app.js"></script>
@@ -28,7 +29,7 @@
     <div class="new-container">
       <h1>Add New Resource</h1>
 
-      <form id="new-resource">
+      <form id="new-resource" data-categories="<%= JSON.stringify(categories) %>">
 
         <div class="input-group">
           <span class="input-group-addon">URL</span>
@@ -41,16 +42,17 @@
         <div class="input-group">
           <span class="input-group-addon">Description</span>
           <textarea type="text" name="description" class="form-control" placeholder="Description"></textarea>
-          <p id="message"></p> <!-- flash messages will be shown here -->
-          <span class="counter">255</span>
         </div>
-        <select multiple id="selectbox" size="3">
-          <option value="Coding">Coding</option>
-          <option value="Test">Test</option>
-          <option value="Sports">Sports</option>
-          <option value="Cooking">Cooking</option>
-        </select>
+        <div class="counter">
+          <span id="message"></span> <!-- flash messages will be shown here -->
+          <span>255</span>
+        </div>
+        <div class="container tag-container">
+          Test
+        </div>
         <button class="btn btn-default" id="submit-resource-btn" type="submit">Submit</button>
+
+
       </form>
     </div>
 

@@ -73,7 +73,11 @@ app.get("/register", (req, res) => {
 
 // Add Resource page
 app.get("/new", (req, res) => {
-  res.render("new");
+  knex('categories').select()
+    .then((results) => {
+      console.log(results);
+      res.render("new", {categories: results});
+    })
 });
 
 // My Resources page --- need to switch once page is built
