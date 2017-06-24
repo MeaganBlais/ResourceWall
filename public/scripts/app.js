@@ -34,8 +34,9 @@ $(document).ready(function() {
         url: '/api/resources',
         method: 'POST',
         data: $(this).serialize(),
-        success: function() {
-          console.log('Success: ');
+        success: function(results) {
+          console.log('Success: ', results);
+          $(location).attr('href','/resources/' + results);
         }
       });
       $(this).find('textarea').val('');

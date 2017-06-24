@@ -69,9 +69,15 @@ app.get("/register", (req, res) => {
   res.render("register");
 });
 
-// Register page
+// Add Resource page
 app.get("/new", (req, res) => {
   res.render("new");
+});
+
+// My Resources page --- need to switch once page is built
+app.get("/myresources", (req, res) => {
+  // res.render("myresources");
+  res.render("index");
 });
 
 app.listen(PORT, () => {

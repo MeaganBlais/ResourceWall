@@ -17,9 +17,10 @@ module.exports = (knex) => {
     const addResource = (data) => {
       knex('resources')
         .insert(data)
+        .returning('id')
         .then( (results) => {
-          // need to send response to tell ajax call on app.js that post was successful
-          res.status(200).send();
+
+          res.status(200).send(results);
         })
         .catch( (err) => {
           throw err;
