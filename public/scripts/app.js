@@ -1,14 +1,51 @@
+var getTagsArray = function () {
+  var tags = {
+    new: [],
+    old: []
+  }
+  var categories = categoriesObjectArray();
+  $.each($('.tag'), function (i, tag) {
+    var tagName = $(tag).text().trim();
+    for (var category of categories) {
+      if (category.name === tagName) {
+        tags.old.push(category.id);
+        return;
+      }
+    }
+    tags.new.push(tagName);
+  });
+  console.log(tags);
+  return tags;
+}
+
+var categoriesObjectArray = function () {
+  var categoryObjects = $('#new-resource').data('categories');
+  var categories = [];
+  for (var category of categoryObjects) {
+    categories.push(category);
+  }
+  return categories;
+}
+
+
 $(document).ready(function() {
   $('#new-resource').on('submit', function(event) {
     event.preventDefault();
 
+    var tags = getTagsArray();
     //get data from the form
     $textarea = $(this).closest("form").find("textarea");
     $message = $(this).closest("form").find("#message");
     $counter = $(this).closest("form").find(".counter");
 
-    //prepare data for Ajax calling
-    $data = $textarea.serialize();
+    var $data = {
+      URL: $('#URL').val(),
+      title: $('#title').val(),
+      description: $('#description').val(),
+      categories: tags
+    }
+    console.log($data);
+    // console.log(encodeURIComponent(tags.join('+')));
 
     //get the text (without spaces) and its lenght to validate
     $text = $textarea.val().trim();
@@ -33,7 +70,8 @@ $(document).ready(function() {
       $.ajax({
         url: '/api/resources',
         method: 'POST',
-        data: $(this).serialize(),
+        data: $.param($data),
+        // contentType: "application/json",
         success: function(results) {
           console.log('Success: ', results);
           $(location).attr('href','/resources/' + results);
