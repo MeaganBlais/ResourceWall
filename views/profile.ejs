@@ -19,26 +19,6 @@
   <script type="text/javascript" src="/scripts/app.js"></script>
   <script type="text/javascript" src="/scripts/user-functions.js"></script>
 
-  <script type="text/javascript">
-
-  //forms don't accept put method so this function works around that limitation
-  function putUpdate(){
-
-    var form = $('#profile');
-
-    $.ajax({
-      url: "<%= '/api/users/' + users.id %>",
-      type: 'PUT',
-      data: form.serialize(),
-      success: function(data) {
-        console.log(data);
-        $(location).attr('href','/');
-      }
-    });
-    return false;
-  }
-
-  </script>
 </head>
 
 <body>

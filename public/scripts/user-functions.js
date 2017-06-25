@@ -150,6 +150,22 @@ var onStart = function () {
   }
 }
 
+  //forms don't accept put method so this function works around that limitation
+function putUpdate(){
+
+  var form = $('#profile');
+
+  $.ajax({
+    url: '/api/users/' + getUserID(),
+    type: 'PUT',
+    data: form.serialize(),
+    success: function(data) {
+      console.log(data);
+      $(location).attr('href','/');
+    }
+  });
+  return false;
+}
 
 $(document).ready(function () {
   onStart();
