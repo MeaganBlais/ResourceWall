@@ -147,7 +147,7 @@ function putUpdate(){
   var validations = true;
   var message = "";
 
-  var form = $('#profile');
+  var form = $('.updates');
 
   //validate inputs
   if(emptyFiled($("#fullname").val()) || emptyFiled($("#username").val()) ||
