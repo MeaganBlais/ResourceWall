@@ -52,7 +52,7 @@ var logoutButton = function () {
       method: "POST",
       success: () => {
         // navLogout();
-        localStorage.clear();
+        localStorage.removeItem('userInfo');
         $(location).attr('href','/');
       }
     })

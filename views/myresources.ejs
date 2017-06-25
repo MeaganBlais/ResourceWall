@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+ <!DOCTYPE html>
 <html lang="en">
   <head>
     <title>Home Page</title>
@@ -21,7 +21,7 @@
     <script type="text/javascript" src="/scripts/app.js"></script>
     <script type="text/javascript" src="/scripts/user-functions.js"></script>
     <script type="text/javascript" src="/scripts/resources.js"></script>
-    <script type="text/javascript" src="/scripts/home.js"></script>
+    <script type="text/javascript" src="/scripts/my-resources.js"></script>
     <script type="text/javascript" src="/scripts/likes.js"></script>
     <script type="text/javascript" src="/scripts/ratings.js"></script>
   </head>
@@ -31,14 +31,25 @@
     <% include partials/_nav %>
 
     <div class="container">
-    <!-- Example Resource -->
-    <div class="search-container">
-      <input type="text" class="form-control" id="search" placeholder="Seach resources...">
-      <span id="no-results">No matching results for your search...</span>
-    </div>
-    <div id="all-resources" data="">
 
-    </div>
+      <div id="all-resources">
+        <div>
+          <header>
+            <h2>My Resources:</h2>
+          </header>
+          <div id="my-resources" data="">
+          </div>
+        </div>
+
+        <div>
+          <header>
+            <h2>Other resources that I liked:</h2>
+          </header>
+          <div id="my-liked-resources" data="">
+          </div>
+        </div>
+      </div>
+
   </div>
   </body>
 </html>

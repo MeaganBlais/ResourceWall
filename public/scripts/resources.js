@@ -3,14 +3,13 @@ var loadResources = function () {
     url: '/api/resources',
     method: 'GET',
     success: function (results) {
-      renderResources(results);
+      // renderResources(results, origin);
       localStorage.setItem("resources", JSON.stringify(results));
     }
   });
 }
 
 var createResourceElement = function (resource) {
-  console.log(resource);
   var $resource = $(`<article id='resource-${resource.resource_id}'>`).addClass('resource-container');
   var user_id = localStorage.getItem("userInfo") ? JSON.parse(localStorage.getItem("userInfo")).id : '';
 
@@ -109,10 +108,53 @@ var clearResources = function () {
   $('#all-resources').empty();
 }
 
+var clearMyResources = function () {
+  $('#my-resources').empty();
+}
+
+var clearLikedResources = function () {
+  $('#my-liked-resources').empty();
+}
+
 var renderResources = function (resources) {
+  // var resources = JSON.parse(localStorage.getItem('resources'));
   clearResources();
   for (var resource of resources) {
     $('#all-resources').append(createResourceElement(resource));
+  }
+}
+
+var renderMyResources = function (resources) {
+  var user_id = JSON.parse(localStorage.getItem("userInfo")).id;
+  var resources = JSON.parse(localStorage.getItem('resources'));
+  var added = false;
+  clearMyResources();
+  for (var resource of resources) {
+    if (resource.user_id === user_id) {
+      added = true;
+      $('#my-resources').append(createResourceElement(resource));
+    }
+  }
+  if (!added) {
+    $("#my-resources").append("<h4>You didn't add any resources.</h4>");
+  }
+}
+
+var renderLikedResources = function (resources) {
+  var user_id = JSON.parse(localStorage.getItem("userInfo")).id;
+  var resources = JSON.parse(localStorage.getItem('resources'));
+  var liked = false;
+  clearLikedResources();
+  for (var resource of resources) {
+    if (resource.user_id !== user_id) {
+      if(doesUserLikeResource(user_id, resource.likes)){
+        liked = true;
+        $('#my-liked-resources').append(createResourceElement(resource));
+      }
+    }
+  }
+  if (!liked) {
+    $("#my-liked-resources").append("<h4>You didn't like any resources.</h4>");
   }
 }
 
@@ -155,9 +197,4 @@ var noResultsDisplay = function (num) {
   }
 }
 
-$(document).ready(function () {
-  loadResources();
-  searchBarHandler();
 
-
-});

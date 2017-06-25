@@ -76,8 +76,7 @@ app.get("/new", (req, res) => {
 
 // My Resources page --- need to switch once page is built
 app.get("/myresources", (req, res) => {
-  // res.render("myresources");
-  res.render("index");
+  res.render("myresources");
 });
 
 app.listen(PORT, () => {
