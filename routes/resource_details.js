@@ -9,7 +9,6 @@ module.exports = (knex) => {
   router.get("/", (req, res) => {
 
     const resource_id = req.params.resource_id;
-console.log("resource_id: ", resource_id)
     knex('resources')
       //query to return an array of all resources
       .join('users', 'users.id', '=', 'resources.user_id')
@@ -48,7 +47,6 @@ console.log("resource_id: ", resource_id)
         return Promise.all(promises);
       })
       .then((results) => {
-        console.log(results);
         res.status(200).send(results);
       })
       .catch( (err) => {
