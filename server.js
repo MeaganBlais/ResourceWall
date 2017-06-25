@@ -18,10 +18,10 @@ const cookieSession = require('cookie-session');
 // Seperated Routes for each Resource
 const usersRoutes = require("./routes/users");
 const resourcesRoutes = require("./routes/resources");
-const resourceDetailsRoutes = require("./routes/resource_details");
 const resourcesComments = require("./routes/comments");
 const likeRoutes = require("./routes/likes");
 const ratingsRoutes = require("./routes/ratings");
+const categoryRoutes = require("./routes/categories");
 
 // Load the logger first so all (static) HTTP requests are logged to STDOUT
 // 'dev' = Concise output colored by response status for development use.
@@ -52,11 +52,10 @@ app.use(express.static("public"));
 // Mount all resource routes
 app.use("/api/users", usersRoutes(knex));
 app.use("/api/resources", resourcesRoutes(knex));
-app.use("/api/resources/:resource_id", resourceDetailsRoutes(knex));
 app.use("/api/resources/:resource_id/comments", resourcesComments(knex));
 app.use("/api/resources/:resource_id/ratings", ratingsRoutes(knex));
 app.use("/api/resources/:resource_id/likes", likeRoutes(knex));
-
+app.use("/api/resources/:resource_id/categories", categoryRoutes(knex));
 
 
 // Home page
@@ -110,6 +109,7 @@ app.get("/resources/:resource_id", (req, res) => {
         .where('resources_categories.resource_id', resource_id)
         .then((categories) => {
           templateVars.resource_details.categories = categories;
+          console.log('returning', templateVars);
           res.render("resource_detail.ejs", templateVars);
         })
     })
