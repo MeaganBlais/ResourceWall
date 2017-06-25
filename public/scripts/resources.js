@@ -1,9 +1,10 @@
-var loadResources = function () {
+var loadResources = function (callback) {
   $.ajax({
     url: '/api/resources',
     method: 'GET',
+    cache: false,
     success: function (results) {
-      // renderResources(results, origin);
+      callback(results);
       localStorage.setItem("resources", JSON.stringify(results));
     }
   });
@@ -126,7 +127,7 @@ var renderResources = function (resources) {
 
 var renderMyResources = function (resources) {
   var user_id = JSON.parse(localStorage.getItem("userInfo")).id;
-  var resources = JSON.parse(localStorage.getItem('resources'));
+  // var resources = JSON.parse(localStorage.getItem('resources'));
   var added = false;
   clearMyResources();
   for (var resource of resources) {
@@ -142,7 +143,7 @@ var renderMyResources = function (resources) {
 
 var renderLikedResources = function (resources) {
   var user_id = JSON.parse(localStorage.getItem("userInfo")).id;
-  var resources = JSON.parse(localStorage.getItem('resources'));
+  // var resources = JSON.parse(localStorage.getItem('resources'));
   var liked = false;
   clearLikedResources();
   for (var resource of resources) {
@@ -156,6 +157,11 @@ var renderLikedResources = function (resources) {
   if (!liked) {
     $("#my-liked-resources").append("<h4>You didn't like any resources.</h4>");
   }
+}
+
+var renderMyResourcePage = function (resources) {
+  renderMyResources(resources);
+  renderLikedResources(resources);
 }
 
 var doesResourceContain = function (resource, str) {

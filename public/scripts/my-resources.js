@@ -1,6 +1,4 @@
 $(document).ready(function () {
-  loadResources();
-  renderMyResources();
-  renderLikedResources();
+  loadResources(renderMyResourcePage);
   searchBarHandler();
 });
