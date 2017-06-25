@@ -68,6 +68,7 @@ module.exports = (knex) => {
       .join('users', 'users.id', '=', 'resources.user_id')
       .select('resources.id AS resource_id', 'resources.URL', 'resources.title', 'resources.description',
         'user_id', 'users.user_name', 'users.avatar_URL')
+      .orderBy('resource_id')
       //loop through array of resources and add the a ratings property to each, containing an array of all ratings
       .then( (results) => {
         let promises = [];

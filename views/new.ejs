@@ -19,20 +19,21 @@
 
   <!-- Our Javascript -->
   <script type="text/javascript" src="/scripts/app.js"></script>
-  <script type="text/javascript" src="/scripts/new.js"></script>
   <script type="text/javascript" src="/scripts/user-functions.js"></script>
   <script type="text/javascript" src="/scripts/char-counter.js"></script>
   <script type="text/javascript" src="/scripts/tags.js"></script>
+  <script type="text/javascript" src="/scripts/new.js"></script>
+
 </head>
 
 <body>
 
   <% include partials/_nav %>
-  <div class="container">
+  <div class="container" data-categories="<%= JSON.stringify(categories) %>">
     <div class="new-container">
       <h1>Add New Resource</h1>
 
-      <form id="new-resource" data-categories="<%= JSON.stringify(categories) %>">
+      <form id="new-resource">
 
         <div class="input-group">
           <span class="input-group-addon">URL</span>

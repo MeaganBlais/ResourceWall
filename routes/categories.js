@@ -8,6 +8,13 @@ module.exports = (knex) => {
   router.delete("/:category_id", (req, res) => {
     //delete entry from resource_category table
     console.log("hitting delete route");
+    knex('resources_categories')
+      .where('resource_id', req.params.resource_id)
+      .andWhere('category_id', req.params.category_id)
+      .del()
+      .then(()=> {
+        res.status(200).send();
+      })
   })
 
   router.post("/", (req, res) => {

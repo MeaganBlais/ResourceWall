@@ -58,5 +58,5 @@ $(document).ready(function () {
   newResourceFormHandler();
   setAutocomplete();
   tagFormHandler();
-  deleteTagHandler();
+  deleteNewTagHandler();
 });

@@ -1,5 +1,5 @@
 var categoriesArray = function () {
-  var categoryObjects = $('#new-resource').data('categories');
+  var categoryObjects = $('.container').data('categories');
   var categories = [];
   for (var category of categoryObjects) {
     categories.push(category.name);
@@ -35,6 +35,12 @@ var createNewTagComponent = function (category) {
   $('.tag-container').append($tag);
 }
 
+var deleteNewTagHandler = function () {
+  $('.tag-container').on('click', '.glyphicon-remove', function () {
+    $(this).closest('.tag').remove();
+  })
+}
+
 var tagFormHandler = function () {
   $('#tag-form').on('submit', function (event) {
     event.preventDefault();
@@ -44,14 +50,27 @@ var tagFormHandler = function () {
   })
 }
 
+
 var deleteTagHandler = function () {
   $('.tag-container').on('click', '.glyphicon-remove', function () {
-    $(this).closest('.tag').remove();
+    var $tag = $(this).closest('.tag');
+    var resource_id = $('#url').data('id');
+    console.log(resource_id);
+    //delete request
+    $.ajax({
+      method: "DELETE",
+      url: "/api/resources/" + resource_id + "/categories/" + $tag.data('tag-data').id,
+      success: function (result) {
+        console.log("browser things it works");
+      }
+    })
+    //remove tag
   })
 }
 
 var createTagComponent = function (category) {
   var $tag = $(`<span class="tag">${category.name} </span>`);
+  $tag.data('tag-data', category);
   if (category.user_id === getUserID()) {
     $tag.append(`<i class="glyphicon glyphicon-remove"></i>`);
   }

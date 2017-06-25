@@ -157,6 +157,8 @@ function renderTags(categories) {
 
 $(document).ready( function() {
 
+  setAutocomplete();
+  deleteTagHandler();
   // Variables to get information about the user and the resource id
   var resource_id = $('#url').data('id')
 
