@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <title>Home Page</title>
+
+  <!-- External Stylesheets -->
+  <link rel="stylesheet" href="/vendor/normalize-4.1.1.css" type="text/css" />
+  <link rel="stylesheet" href="/vendor/border-box.css" type="text/css" />
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
+
+  <!-- Our Stylesheets -->
+  <link rel="stylesheet" href="/styles/main.css" type="text/css" />
+
+  <!-- External Javascript -->
+  <script type="text/javascript" src="/vendor/jquery-3.0.0.js"></script>
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script>
+
+  <!-- Our Javascript -->
+  <script type="text/javascript" src="/scripts/app.js"></script>
+  <script type="text/javascript" src="/scripts/user-functions.js"></script>
+
+  <script type="text/javascript">
+
+  //forms don't accept put method so this function works around that limitation
+  function putUpdate(){
+
+    var form = $('#profile');
+
+    $.ajax({
+      url: "<%= '/api/users/' + users.id %>",
+      type: 'PUT',
+      data: form.serialize(),
+      success: function(data) {
+        console.log(data);
+      }
+    });
+    return false;
+  }
+
+  </script>
+</head>
+
+<body>
+  <% include partials/_nav %>
+
+  <div class="container">
+
+    <div class="registration-container">
+      <h1>Profile</h1>
+
+      <form id="profile" onSubmit=" return putUpdate();">
+        <img class="avatar-big" src="<%= users.avatar_URL %>">
+        <div class="input-group">
+          <span class="input-group-addon" id="basic-addon1">Profile Picture</span>
+          <input type="text" class="form-control" placeholder="image url" name="avatar_URL" value="<%= users.avatar_URL %>">
+        </div>
+
+        <div class="input-group">
+          <span class="input-group-addon" id="basic-addon1">Username</span>
+          <input type="text" class="form-control" placeholder="<%= users.user_name %>" name="user_name" value="<%= users.user_name %>">
+        </div>
+
+        <div class="input-group">
+          <span class="input-group-addon" id="basic-addon1">Fullname</span>
+          <input type="text" class="form-control" placeholder="<%= users.full_name %>" name="full_name" value="<%= users.full_name %>">
+        </div>
+
+        <div class="input-group">
+          <span class="input-group-addon" id="basic-addon1">Email</span>
+          <input type="text" class="form-control" placeholder="<%= users.email %>" name="email" value="<%= users.email %>">
+        </div>
+
+        <button class="btn btn-default">Update</button>
+      </form>
+    </div>
+
+
+
+
+  </div>
+</body>
+</html>
