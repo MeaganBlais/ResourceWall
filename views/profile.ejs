@@ -18,6 +18,8 @@
   <!-- Our Javascript -->
   <script type="text/javascript" src="/scripts/app.js"></script>
   <script type="text/javascript" src="/scripts/user-functions.js"></script>
+  <script type="text/javascript" src="/scripts/validations.js"></script>
+  <script type="text/javascript" src=""></script>
 
 </head>
 
@@ -33,25 +35,28 @@
         <img class="avatar-big" src="<%= users.avatar_URL %>">
         <div class="input-group">
           <span class="input-group-addon" id="basic-addon1">Profile Picture</span>
-          <input type="text" class="form-control" placeholder="image url" name="avatar_URL" value="<%= users.avatar_URL %>">
+          <input type="text" class="form-control" placeholder="image url" name="avatar_URL" value="<%= users.avatar_URL %>"  maxlength="255" id="avatar">
         </div>
 
         <div class="input-group">
-          <span class="input-group-addon" id="basic-addon1">Username</span>
-          <input type="text" class="form-control" placeholder="<%= users.user_name %>" name="user_name" value="<%= users.user_name %>">
+          <span class="input-group-addon" id="basic-addon1">Username (*)</span>
+          <input type="text" class="form-control" placeholder="<%= users.user_name %>" name="user_name" value="<%= users.user_name %>" maxlength="20" id="username">
         </div>
 
         <div class="input-group">
-          <span class="input-group-addon" id="basic-addon1">Fullname</span>
-          <input type="text" class="form-control" placeholder="<%= users.full_name %>" name="full_name" value="<%= users.full_name %>">
+          <span class="input-group-addon" id="basic-addon1">Fullname (*)</span>
+          <input type="text" class="form-control" placeholder="<%= users.full_name %>" name="full_name" value="<%= users.full_name %>" maxlength="40" id="fullname">
         </div>
 
         <div class="input-group">
-          <span class="input-group-addon" id="basic-addon1">Email</span>
-          <input type="text" class="form-control" placeholder="<%= users.email %>" name="email" value="<%= users.email %>">
+          <span class="input-group-addon" id="basic-addon1">Email (*)</span>
+          <input type="email" class="form-control" placeholder="<%= users.email %>" name="email" value="<%= users.email %>"  maxlength="255" id="email">
         </div>
 
-        <button class="btn btn-default">Update</button>
+        <div>
+          <p id="register_message"></p>
+          <button class="btn btn-default" id="register-btn">Update</button>
+        </div>
       </form>
     </div>
 

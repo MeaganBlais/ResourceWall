@@ -27,18 +27,11 @@ var registerFormHandler = function () {
         message += "Avatar must be in one of the following formats: jpg, png or gif.";
     }
 
-
     $('#register_message').text(message);
-
-
 
 
     //POST request to server with new user info
     if (validations) {
-
-      // if(emptyFiled($("#avatar").val())) {
-      //   $("#avatar").val("/images/placeholder-user.png");
-      // }
 
       $.ajax({
         url: "/api/users",
@@ -49,7 +42,6 @@ var registerFormHandler = function () {
           $(location).attr('href','/');
         },
         error: function(response){
-          // $("#avatar").val("");
           $('#register_message').text(response.responseText);
         }
       });
@@ -152,20 +144,52 @@ var onStart = function () {
 
   //forms don't accept put method so this function works around that limitation
 function putUpdate(){
+  var validations = true;
+  var message = "";
 
   var form = $('#profile');
 
-  $.ajax({
-    url: '/api/users/' + getUserID(),
-    type: 'PUT',
-    data: form.serialize(),
-    success: function(data) {
-      console.log(data);
-      $(location).attr('href','/');
+  //validate inputs
+  if(emptyFiled($("#fullname").val()) || emptyFiled($("#username").val()) ||
+    emptyFiled($("#email").val())) {
+
+    validations = false;
+    message += "All (*) fields are required. ";
+
+  }
+
+  if ($("#avatar").val()) {
+    if ($("#avatar").val() !== "/images/placeholder-user.png") {
+
+      if (!(/^[hH][tT][tT][pP]:\/\//.test($("#avatar").val())) ||
+        !( (/[jJ][pP][gG]$/.test($("#avatar").val())) ||
+          (/[pP][nN][gG]$/.test($("#avatar").val())) ||
+          (/[gG][iI][fF]$/.test($("#avatar").val())))) {
+        validations = false;
+        message += "The avatar must start with http:// and must be in one of the following formats: jpg, png or gif.";
+      }
     }
-  });
+  }
+
+  $('#register_message').text(message);
+
+  if (validations) {
+    $.ajax({
+      url: '/api/users/' + getUserID(),
+      type: 'PUT',
+      data: form.serialize(),
+      success: function(data) {
+        $(location).attr('href','/');
+      },
+      error: function(response){
+        $('#register_message').text(response.responseText);
+      }
+    });
+  }
+
   return false;
 }
+
 
 $(document).ready(function () {
   onStart();

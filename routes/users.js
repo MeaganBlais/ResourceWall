@@ -87,14 +87,20 @@ module.exports = (knex) => {
       full_name: req.body.full_name,
       email: req.body.email,
       // password: ,
-      avatar_URL: req.body.avatar_URL
+      avatar_URL: req.body.avatar_URL  ? req.body.avatar_URL : "/images/placeholder-user.png"
       // date_join:
     })
     .then( (result) => {
       res.json(result);
     })
     .catch((err) => {
-      throw err;
+      if(/already exists/.test(err.detail)) {
+        console.error(err);
+        res.status(500).send("User already exists.");
+      } else {
+        console.error(err);
+        res.status(500).send("Something wrong happened, please try again.");
+      }
     })
   });
   return router;
