@@ -176,7 +176,7 @@ $(document).ready( function() {
 
   //event listener to submit button
   $("#input-comment-btn").on("click", function(event) {
-console.log("clicou")
+
     //prevent to change the page
     event.preventDefault();
 
@@ -206,7 +206,7 @@ console.log("clicou")
       $textarea.focus();
 
     } else {
-console.log("vou incluir")
+
       //validations are ok, comment will be send, and the area for comments will be re-loaded
       $.post(`/api/resources/${resource_id}/comments`, $data)
 

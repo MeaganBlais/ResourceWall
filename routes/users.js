@@ -15,7 +15,7 @@ module.exports = (knex) => {
       full_name: req.body.full_name,
       email: req.body.email,
       password: bcrypt.hashSync(req.body.password, 10),
-      avatar_URL: req.body.avatar_URL,
+      avatar_URL: req.body.avatar_URL  ? req.body.avatar_URL : "/images/placeholder-user.png",
       date_join: new Date()
     }
     //insert new user object in to users table
@@ -28,7 +28,13 @@ module.exports = (knex) => {
         res.status(200).send(results[0]);
       })
       .catch((err) => {
-        throw err;
+        if(/already exists/.test(err.detail)) {
+          console.error(err);
+          res.status(500).send("User already exists.");
+        } else {
+          console.error(err);
+          res.status(500).send("Something wrong happened, please try again.");
+        }
       })
   });
 
@@ -45,7 +51,7 @@ module.exports = (knex) => {
         //if nothing is returned exit function
         if (results.length === 0) {
           console.log("No user exists");
-          res.status(500).send();
+          res.status(500).send("No user exists.");
           return;
         }
         //check hashed password against provided
@@ -56,7 +62,7 @@ module.exports = (knex) => {
           res.status(200).send(userInfo);
         } else {
           console.log("wrong password");
-          res.status(500).send();
+          res.status(500).send("Wrong password");
         }
       })
       .catch( (err) => {
