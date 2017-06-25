@@ -68,13 +68,22 @@ var deleteTagHandler = function () {
   })
 }
 
-var createTagComponent = function (category) {
+var createTagComponent = function (category, destination, size, editable) {
   var $tag = $(`<span class="tag">${category.name} </span>`);
   $tag.data('tag-data', category);
-  if (category.user_id === getUserID()) {
+  if (size === "small") {
+    $tag.addClass('tag-small');
+  }
+  if (category.user_id === getUserID() && editable) {
     $tag.append(`<i class="glyphicon glyphicon-remove"></i>`);
   }
-  $('.tag-container').append($tag);
+  destination.append($tag);
+  // $('.tag-container').append($tag);
+
+}
+
+var renderResourceTags = function () {
+
 }
 
 var getTagsArray = function () {

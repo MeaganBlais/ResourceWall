@@ -50,6 +50,13 @@ var createResourceElement = function (resource) {
     </span>
   `);
 
+  if (resource.categories.length > 0) {
+    resourceFooter.append(`<div class="small-tag-container"></div>`);
+    for (category of resource.categories) {
+      createTagComponent(category, resourceFooter.find('.small-tag-container'), "small")
+    }
+  }
+
   $resource.append(resourceHeader);
   $resource.append(resourceBody);
   $resource.append(resourceFooter);
@@ -167,12 +174,17 @@ var renderMyResourcePage = function (resources) {
 var doesResourceContain = function (resource, str) {
 //check if a resource contains the search string in either the title or description
   //check title
-  if (resource.title.includes(str)) {
+  if (resource.title.toLowerCase().includes(str)) {
     return true;
   }
   //check description
-  if (resource.description.includes(str)) {
+  if (resource.description.toLowerCase().includes(str)) {
     return true;
+  }
+  for (var category of resource.categories) {
+    if (category.name.toLowerCase().includes(str)) {
+      return true;
+    }
   }
   return false;
 }
@@ -182,7 +194,7 @@ var searchBarHandler = function () {
 //when user types in search bar, get current resource array from localStorage and re-render a filtered array
   $('#search').on('input', function () {
     var resources = JSON.parse(localStorage.getItem("resources"));
-    var searchString = $(this).val();
+    var searchString = $(this).val().toLowerCase();
     if (searchString === "" || searchString === null) {
       renderResources(resources);
       return;

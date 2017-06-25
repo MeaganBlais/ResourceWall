@@ -115,6 +115,22 @@ module.exports = (knex) => {
         return Promise.all(promises);
       })
       .then((results) => {
+        let promises = [];
+        for (let resource of results) {
+          promises.push(
+            knex('resources_categories')
+              .join('categories', 'categories.id', '=', 'resources_categories.category_id')
+              .select('categories.id', 'categories.name', 'resources_categories.user_id')
+              .where('resources_categories.resource_id', resource.resource_id)
+              .then((categories) => {
+                resource['categories'] = categories;
+                return resource;
+              })
+          );
+        }
+        return Promise.all(promises);
+      })
+      .then((results) => {
         res.status(200).send(results);
       })
       .catch( (err) => {
