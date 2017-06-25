@@ -15,21 +15,27 @@ module.exports = (knex) => {
       full_name: req.body.full_name,
       email: req.body.email,
       password: bcrypt.hashSync(req.body.password, 10),
-      avatar_URL: req.body.avatar_URL,
+      avatar_URL: req.body.avatar_URL  ? req.body.avatar_URL : "/images/placeholder-user.png",
       date_join: new Date()
     }
     //insert new user object in to users table
     knex('users')
-    .insert(newUser)
-    .returning(['id', 'user_name', 'avatar_URL'])
-    .then( (results) => {
-      console.log(newUser);
-      req.session.user = results[0];
-      res.status(200).send(results[0]);
-    })
-    .catch((err) => {
-      throw err;
-    })
+      .insert(newUser)
+      .returning(['id', 'user_name', 'avatar_URL'])
+      .then( (results) => {
+        console.log(newUser);
+        req.session.user = results[0];
+        res.status(200).send(results[0]);
+      })
+      .catch((err) => {
+        if(/already exists/.test(err.detail)) {
+          console.error(err);
+          res.status(500).send("User already exists.");
+        } else {
+          console.error(err);
+          res.status(500).send("Something wrong happened, please try again.");
+        }
+      })
   });
 
   router.post("/login", (req, res) => {
@@ -39,29 +45,29 @@ module.exports = (knex) => {
 
     //tries to find user in database with provided username
     knex('users')
-    .select()
-    .where('user_name', user_name)
-    .then( (results) => {
-      //if nothing is returned exit function
-      if (results.length === 0) {
-        console.log("No user exists");
-        res.status(500).send();
-        return;
-      }
-      //check hashed password against provided
-      if (bcrypt.compareSync(password, results[0].password)) {
-        let userInfo = Object.assign({}, results[0]);
-        delete userInfo.password;
-        req.session.user = userInfo;
-        res.status(200).send(userInfo);
-      } else {
-        console.log("wrong password");
-        res.status(500).send();
-      }
-    })
-    .catch( (err) => {
-      throw err;
-    })
+      .select()
+      .where('user_name', user_name)
+      .then( (results) => {
+        //if nothing is returned exit function
+        if (results.length === 0) {
+          console.log("No user exists");
+          res.status(500).send("No user exists.");
+          return;
+        }
+        //check hashed password against provided
+        if (bcrypt.compareSync(password, results[0].password)) {
+          let userInfo = Object.assign({}, results[0]);
+          delete userInfo.password;
+          req.session.user = userInfo;
+          res.status(200).send(userInfo);
+        } else {
+          console.log("wrong password");
+          res.status(500).send("Wrong password");
+        }
+      })
+      .catch( (err) => {
+        throw err;
+      })
 
 
   });

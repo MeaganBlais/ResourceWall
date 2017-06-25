@@ -18,6 +18,7 @@
     <!-- Our Javascript -->
     <script type="text/javascript" src="/scripts/app.js"></script>
     <script type="text/javascript" src="/scripts/user-functions.js"></script>
+    <script type="text/javascript" src="/scripts/validations.js"></script>
   </head>
 
   <body>
@@ -32,30 +33,33 @@
         <img class="avatar-big" src="/images/placeholder-user.png">
         <div class="input-group">
           <span class="input-group-addon" id="basic-addon1">Avatar URL</span>
-          <input type="text" class="form-control" placeholder="Avatar URL" name="avatar_URL">
+          <input type="URL" class="form-control" placeholder="Avatar URL" name="avatar_URL" maxlength="255" id="avatar">
         </div>
 
         <div class="input-group">
-          <span class="input-group-addon" id="basic-addon1">Fullname</span>
-          <input type="text" class="form-control" placeholder="Fullname" name="full_name">
+          <span class="input-group-addon" id="basic-addon1">Fullname (*)</span>
+          <input type="text" class="form-control" placeholder="Fullname" name="full_name" maxlength="40" id="fullname">
         </div>
         <div class="input-group">
-          <span class="input-group-addon" id="basic-addon1">Username</span>
-          <input type="text" class="form-control" placeholder="Username" name="user_name">
+          <span class="input-group-addon" id="basic-addon1">Username (*)</span>
+          <input type="text" class="form-control" placeholder="Username" name="user_name" maxlength="20" id="username">
         </div>
         <div class="input-group">
-          <span class="input-group-addon" id="basic-addon1">E-mail</span>
-          <input type="email" class="form-control" placeholder="E-mail" name="email">
+          <span class="input-group-addon" id="basic-addon1">E-mail (*)</span>
+          <input type="email" class="form-control" placeholder="E-mail" name="email" maxlength="255" id="email">
         </div>
         <div class="input-group">
-          <span class="input-group-addon" id="basic-addon1">Password</span>
-          <input type="password" class="form-control" placeholder="Password" name="password">
+          <span class="input-group-addon" id="basic-addon1">Password (*)</span>
+          <input type="password" class="form-control" placeholder="Password" name="password" maxlength="20" id="password1">
         </div>
         <div class="input-group">
-          <span class="input-group-addon" id="basic-addon1">Confirm Password</span>
-          <input type="password" class="form-control" placeholder="Password">
+          <span class="input-group-addon" id="basic-addon1">Confirm Password (*)</span>
+          <input type="password" class="form-control" placeholder="Password" maxlength="20" id="password2">
         </div>
-      <button class="btn btn-default" type="submit">Submit</button>
+      <div>
+        <p id="register_message"></p>
+        <button class="btn btn-default" type="submit" id="register-btn">Submit</button>
+      </div>
       </form>
       </div>
 

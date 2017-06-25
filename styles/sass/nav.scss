@@ -4,6 +4,12 @@
   span {
     color: $nav-text-color;
   }
+
+  #nav_message {
+    float: left;
+    margin-right: 20px;
+    margin-top: 5px;
+  }
 }
 
 .logged-out {

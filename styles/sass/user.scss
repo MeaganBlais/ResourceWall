@@ -1,0 +1,15 @@
+.registration-container {
+  overflow: auto;
+
+  #register_message {
+    color: $flash-message-color;
+    text-align: center;
+    float:left;
+  }
+
+  #register-btn {
+      float: right;
+    }
+
+
+}

@@ -2,19 +2,58 @@ var registerFormHandler = function () {
   //upon submission of registration form, validate data and then send the new user info to server
   $("#registration").on("submit", function (event) {
     event.preventDefault();
+    var validations = true;
+    var message = "";
+
     //validate inputs
+    if(emptyFiled($("#fullname").val()) || emptyFiled($("#username").val()) ||
+      emptyFiled($("#email").val()) || emptyFiled($("#password1").val()) ||
+      emptyFiled($("#password2").val())) {
+
+      validations = false;
+      message += "All (*) fields are required. ";
+
+    }
+
+    if(!equal($("#password1").val(),$("#password2").val())) {
+      validations = false;
+      message += "'Password' and 'Confirm Password' are not the same. ";
+    }
+
+    if ( ($("#avatar").val()) && !( (/[jJ][pP][gG]$/.test($("#avatar").val())) ||
+      (/[pP][nN][gG]$/.test($("#avatar").val())) ||
+      (/[gG][iI][fF]$/.test($("#avatar").val())) )) {
+        validations = false;
+        message += "Avatar must be in one of the following formats: jpg, png or gif.";
+    }
+
+
+    $('#register_message').text(message);
+
+
+
 
     //POST request to server with new user info
-    $.ajax({
-      url: "/api/users",
-      method: "POST",
-      data: $(this).serialize(),
-      success: (response) => {
-        console.log("Browser thinks it works");
-        localStorage.setItem("userInfo", JSON.stringify(response));
-        $(location).attr('href','/');
-      }
-    });
+    if (validations) {
+
+      // if(emptyFiled($("#avatar").val())) {
+      //   $("#avatar").val("/images/placeholder-user.png");
+      // }
+
+      $.ajax({
+        url: "/api/users",
+        method: "POST",
+        data: $(this).serialize(),
+        success: (response) => {
+          localStorage.setItem("userInfo", JSON.stringify(response));
+          $(location).attr('href','/');
+        },
+        error: function(response){
+          // $("#avatar").val("");
+          $('#register_message').text(response.responseText);
+        }
+      });
+    }
 
   })
 }
@@ -23,21 +62,32 @@ var loginFormHandler = function () {
   //when a user clicks the loging button on the nav
   $(".logged-out form").on("submit", function (event) {
     event.preventDefault();
-    //validate inputs
+    var validations = true;
+
+    //validate empty inputs
+    if(emptyFiled($("#login").val()) || emptyFiled($("#password").val())) {
+      validations = false;
+      $('#nav_message').text("We need your login and your password.");
+    } else {
+      $('#nav_message').text("");
+    };
 
     //send POST request to server to validate login information
-    $.ajax({
-      url: "/api/users/login",
-      method: "POST",
-      data: $(this).serialize(),
-      success: (response) => {
-        console.log("Browser thinks it works");
-        console.log(response);
-        localStorage.setItem("userInfo", JSON.stringify(response));
-        $(location).attr('href','/');
-        // navLogin();
-      }
-    });
+    if (validations) {
+      $.ajax({
+        url: "/api/users/login",
+        method: "POST",
+        data: $(this).serialize(),
+        success: (response) => {
+          localStorage.setItem("userInfo", JSON.stringify(response));
+          $(location).attr('href','/');
+          // navLogin();
+        },
+        error: function(data){
+          $('#nav_message').text("Wrong login and/or password.");
+        }
+      });
+    }
 
   });
 }
