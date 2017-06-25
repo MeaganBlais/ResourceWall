@@ -139,3 +139,26 @@ app.get("/resources/:resource_id/comments", (req, res) => {
     });
 
 });
+
+// Profile page
+app.get("/profile", (req, res) => {
+
+  // Get the user id
+  let user_id = req.session.user.id;
+
+  // Declaring a variable to get the query result
+  let user_profile;
+
+  // Getting the user detail from database
+  knex('users')
+    .select('users.id', 'users.user_name', 'users.full_name', 'users.email', 'users.avatar_URL')
+    .where({id: user_id})
+    .then((results) => {
+      //render the page to show the profile details
+      res.render("profile.ejs", {users: results[0]});
+    })
+    .catch(function(error) {
+      console.error(error);
+    });
+
+});
