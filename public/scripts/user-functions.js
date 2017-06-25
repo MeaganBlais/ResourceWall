@@ -68,6 +68,16 @@ var checkLogin = function () {
   return false;
 }
 
+var getUserID = function () {
+  //checks if the user has a saved session in local storage
+  var userInfo = JSON.parse(localStorage.getItem("userInfo"));
+  if (userInfo) {
+    return userInfo.id;
+  }
+  return null;
+}
+
+
 var navLogin = function () {
   //update nav logged-in section with user info and toggle it on
   var userInfo = JSON.parse(localStorage.getItem("userInfo"));

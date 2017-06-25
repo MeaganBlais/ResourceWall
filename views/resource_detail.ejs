@@ -32,7 +32,7 @@
 
     <% include partials/_nav %>
 
-    <div class="container" id="all-resources">
+    <div class="container" id="all-resources" data-categories="<%= JSON.stringify(categories) %>">
     <!-- Example Resource -->
       <article class="resource-container" id='resource-<%= resource_details.id %>' data-resource-data="<%= JSON.stringify(resource_details) %>">
         <header>

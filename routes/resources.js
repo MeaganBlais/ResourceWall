@@ -16,8 +16,8 @@ module.exports = (knex) => {
     }
 
     let categories = req.body.categories;
-    let newCategories = req.body.categories.new;
-    let categoryIDs = req.body.categories.old;
+    let newCategories = categories ? req.body.categories.new : [];
+    let categoryIDs = categories ? req.body.categories.old : [];
     let resource_id
     let promises = [];
 
@@ -51,7 +51,9 @@ module.exports = (knex) => {
       })
       .then((result) => {
         console.log('sending response');
-        res.status(200).send(resource_id);
+        res.json(resource_id);
+        res.status(200);
+        res.send();
       })
 
 
@@ -165,7 +167,7 @@ module.exports = (knex) => {
           promises.push(
             knex('resources_categories')
               .join('categories', 'categories.id', '=', 'resources_categories.category_id')
-              .select('categories.id', 'categories.name')
+              .select('categories.id', 'categories.name', 'resources_categories.user_id')
               .where('resources_categories.resource_id', resource_id)
               .then((categories) => {
                 resource['categories'] = categories;

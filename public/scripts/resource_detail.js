@@ -150,7 +150,7 @@ function loadDataResource(resource_id) {
 
 function renderTags(categories) {
   for (var category of categories) {
-    createTagComponent(category.name);
+    createTagComponent(category);
   }
 }
 

@@ -30,7 +30,7 @@ var setAutocomplete = function () {
   });
 }
 
-var createTagComponent = function (category) {
+var createNewTagComponent = function (category) {
   var $tag = $(`<span class="tag">${category} <i class="glyphicon glyphicon-remove"></i></span>`);
   $('.tag-container').append($tag);
 }
@@ -39,7 +39,8 @@ var tagFormHandler = function () {
   $('#tag-form').on('submit', function (event) {
     event.preventDefault();
     var category = $('#tag-search').val();
-    createTagComponent(category);
+    createNewTagComponent(category);
+    $('#tag-search').val('');
   })
 }
 
@@ -49,9 +50,39 @@ var deleteTagHandler = function () {
   })
 }
 
+var createTagComponent = function (category) {
+  var $tag = $(`<span class="tag">${category.name} </span>`);
+  if (category.user_id === getUserID()) {
+    $tag.append(`<i class="glyphicon glyphicon-remove"></i>`);
+  }
+  $('.tag-container').append($tag);
+}
 
-$(document).ready(function () {
-  setAutocomplete();
-  tagFormHandler();
-  deleteTagHandler();
-});
+var getTagsArray = function () {
+  var tags = {
+    new: [],
+    old: []
+  }
+  var categories = categoriesObjectArray();
+  $.each($('.tag'), function (i, tag) {
+    var tagName = $(tag).text().trim();
+    for (var category of categories) {
+      if (category.name === tagName) {
+        tags.old.push(category.id);
+        return;
+      }
+    }
+    tags.new.push(tagName);
+  });
+  console.log(tags);
+  return tags;
+}
+
+var categoriesObjectArray = function () {
+  var categoryObjects = $('#new-resource').data('categories');
+  var categories = [];
+  for (var category of categoryObjects) {
+    categories.push(category);
+  }
+  return categories;
+}

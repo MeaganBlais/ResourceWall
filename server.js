@@ -103,12 +103,10 @@ app.get("/resources/:resource_id", (req, res) => {
     .select('resources.id', 'resources.URL', 'resources.title', 'resources.description', 'users.user_name', 'users.id as user_id', 'users.avatar_URL')
     .then((results) => {
       templateVars.resource_details = results[0];
-      knex('resources_categories')
-        .join('categories', 'categories.id', '=', 'resources_categories.category_id')
-        .select('categories.id', 'categories.name')
-        .where('resources_categories.resource_id', resource_id)
+      knex('categories')
+        .select()
         .then((categories) => {
-          templateVars.resource_details.categories = categories;
+          templateVars.categories = categories;
           console.log('returning', templateVars);
           res.render("resource_detail.ejs", templateVars);
         })
