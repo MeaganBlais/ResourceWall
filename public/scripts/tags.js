@@ -41,7 +41,7 @@ var deleteNewTagHandler = function () {
   })
 }
 
-var tagFormHandler = function () {
+var newTagFormHandler = function () {
   $('#tag-form').on('submit', function (event) {
     event.preventDefault();
     var category = $('#tag-search').val();
@@ -98,7 +98,7 @@ var getTagsArray = function () {
 }
 
 var categoriesObjectArray = function () {
-  var categoryObjects = $('#new-resource').data('categories');
+  var categoryObjects = $('.container').data('categories');
   var categories = [];
   for (var category of categoryObjects) {
     categories.push(category);

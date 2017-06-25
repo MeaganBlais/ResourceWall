@@ -57,6 +57,6 @@ var newResourceFormHandler = function () {
 $(document).ready(function () {
   newResourceFormHandler();
   setAutocomplete();
-  tagFormHandler();
+  newTagFormHandler();
   deleteNewTagHandler();
 });
