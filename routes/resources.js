@@ -6,7 +6,7 @@ const router  = express.Router();
 module.exports = (knex) => {
 
   router.post("/", (req, res) => {
-    console.log(req.body);
+
     const newResource = {
       // id: , //needs to be randomly generated
       user_id: req.session.user.id,
@@ -15,19 +15,47 @@ module.exports = (knex) => {
       description: req.body.description
     }
 
-    const addResource = (data) => {
-      knex('resources')
-        .insert(data)
-        .returning('id')
-        .then( (results) => {
+    let categories = req.body.categories;
+    let newCategories = req.body.categories.new;
+    let categoryIDs = req.body.categories.old;
+    let resource_id
+    let promises = [];
 
-          res.status(200).send(results);
+    newCategories.forEach((category) => {
+      promises.push(knex('categories').insert({name: category})
+        .returning('id')
+        .then((result) => {
+          categoryIDs.push(result[0]);
+          return result[0];
+        }));
+    })
+
+    promises.push(knex('resources')
+          .insert(newResource)
+          .returning('id')
+          .then((result) => {
+            resource_id = result[0];
+          }));
+
+    Promise.all(promises)
+      .then((result) => {
+        console.log('ID hopefully, ', resource_id);
+        console.log('categoryIDs, ', categoryIDs);
+        categoryIDs.forEach((category) => {
+          knex('resources_categories')
+            .insert({'resource_id': resource_id, 'user_id': req.session.user.id, 'category_id': Number(category)})
+            .then((result) => {
+              console.log('put in new category_resource');
+            })
         })
-        .catch( (err) => {
-          throw err;
-        })
-    }
-    addResource(newResource);
+      })
+      .then((result) => {
+        console.log('sending response');
+        res.status(200).send(resource_id);
+      })
+
+
+
   });
 
 
