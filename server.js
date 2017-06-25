@@ -95,7 +95,7 @@ app.get("/resources/:resource_id", (req, res) => {
   let resource_id = req.params.resource_id;
 
   // Declaring a variable to get the query result
-  let resource_details;
+  let templateVars = {};
 
   // Getting the resource detail from database
   knex('resources')
@@ -103,10 +103,15 @@ app.get("/resources/:resource_id", (req, res) => {
     .where('resources.id', resource_id)
     .select('resources.id', 'resources.URL', 'resources.title', 'resources.description', 'users.user_name', 'users.id as user_id', 'users.avatar_URL')
     .then((results) => {
-
-      //render the page to show the resource details
-      res.render("resource_detail.ejs", results[0]);
-
+      templateVars.resource_details = results[0];
+      knex('resources_categories')
+        .join('categories', 'categories.id', '=', 'resources_categories.category_id')
+        .select('categories.id', 'categories.name')
+        .where('resources_categories.resource_id', resource_id)
+        .then((categories) => {
+          templateVars.resource_details.categories = categories;
+          res.render("resource_detail.ejs", templateVars);
+        })
     })
     .catch(function(error) {
       console.error(error);

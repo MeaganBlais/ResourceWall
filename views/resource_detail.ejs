@@ -24,10 +24,7 @@
     <script type="text/javascript" src="/scripts/char-counter.js"></script>
     <script type="text/javascript" src="/scripts/likes.js"></script>
     <script type="text/javascript" src="/scripts/ratings.js"></script>
-
-
-
-
+    <script type="text/javascript" src="/scripts/tags.js"></script>
 
   </head>
 
@@ -37,17 +34,17 @@
 
     <div class="container" id="all-resources">
     <!-- Example Resource -->
-      <article class="resource-container" id='resource-<%= id %>' data-resource-data="test">
+      <article class="resource-container" id='resource-<%= resource_details.id %>' data-resource-data="<%= JSON.stringify(resource_details) %>">
         <header>
-          <h1><a id="url" href="<%= URL%>" data-id="<%= id %>"><%= title %></a></h1>
+          <h1><a id="url" href="<%= resource_details.URL%>" data-id="<%= resource_details.id %>"><%= resource_details.title %></a></h1>
         </header>
         <section>
-          <p><%= description %></p>
+          <p><%= resource_details.description %></p>
         </section>
         <footer>
           <span>
-            <img class="avatar" src="<%= avatar_URL%>">
-            <span><%= user_name%></span>
+            <img class="avatar" src="<%= resource_details.avatar_URL%>">
+            <span><%= resource_details.user_name%></span>
           </span>
           <span class="icons pull-right">
             <span class="ratings">
@@ -65,15 +62,14 @@
               <span class="comments"><i class="glyphicon glyphicon-comment"></i> <span id="totalOfComments">2</span></span>
             </span>
           </span>
-          <span calss="categories">
-            <p>tag 1</p>
-            <p>tag 2</p>
-          </span>
+          <div class="tag-container">
+            <!-- Tags appended here-->
+          </div>
         </footer>
       </article>
 
       <article  class="comment_container hidden">
-        <form action="/api/resources/<%= id %>/comments" method=POST id="new-comment">
+        <form action="/api/resources/<%= resource_details.id %>/comments" method=POST id="new-comment">
           <header>
             <img class="avatar" id="avatar_comment" src ="https://www.fillmurray.com/200/300">
             <span class="input_user" data-id=''>Username</span>
