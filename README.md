@@ -1,14 +1,21 @@
-# Node Skeleton
+# Resource Wall
 
-## Project Setup
+## Option 5: Resource Wall
+Pinterest for learners.
 
-1. Create your own empty repo on GitHub
-2. Clone this repository (do not fork)
-  - Suggestion: When cloning, specify a different folder name that is relevant to your project
-3. Remove the git remote: `git remote rm origin`
-4. Add a remote for your origin: `git remote add origin <your github repo URL>`
-5. Push to the new origin: `git push -u origin master`
-6. Verify that the skeleton code now shows up in your repo on GitHub
+Allow learners to save learning resources like tutorials, blogs and videos in a central place that is publicly available to any user.
+
+## Features:
+* users can save an external URL along with a title and description
+* users can search for already-saved resources created by any user
+* users can categorize any resource under a topic and create new categories
+* users can comment on any resource
+* users can rate any resource
+* users can change their ratings
+* users can like any resource
+* users can unlike any resource
+* users can view all their own and all liked resources on one page ("My resources")
+* users can register, log in, log out and update their profile
 
 ## Getting Started
 
@@ -27,6 +34,10 @@
 - NPM 3.8.x or above
 
 ## Screenshots
-!["Screenshot of my resources"](https://github.com/SeanSFitz/ResourceWall/blob/master/screenshots/MyResources.png)
-!["Screenshot of resource details & comments"](https://github.com/SeanSFitz/ResourceWall/blob/master/screenshots/ResourceDetails%2BComments.png)
-!["Screenshot of responsive main page"](https://github.com/SeanSFitz/ResourceWall/blob/master/screenshots/ResponsiveDesign.png)
+!["Main Page"](https://github.com/SeanSFitz/ResourceWall/blob/master/screenshots/MainPage.png)
+!["Registration"](https://github.com/SeanSFitz/ResourceWall/blob/master/screenshots/Registration.png)
+!["Search"](https://github.com/SeanSFitz/ResourceWall/blob/master/screenshots/Search.png)
+!["UpdateProfile"](https://github.com/SeanSFitz/ResourceWall/blob/master/screenshots/UpdateProfile.png)
+!["My Resources"](https://github.com/SeanSFitz/ResourceWall/blob/master/screenshots/MyResources.png)
+!["Resource Details & Comments"](https://github.com/SeanSFitz/ResourceWall/blob/master/screenshots/ResourceDetails%2BComments.png)
+!["Responsive Main Page"](https://github.com/SeanSFitz/ResourceWall/blob/master/screenshots/ResponsiveDesign.png)
