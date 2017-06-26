@@ -1,19 +1,18 @@
-  .input-group {
-    margin: 15px 0;
-    width: 100%;
+.input-group {
+  margin: 15px 0;
+  width: 100%;
 
-    .input-group-addon {
-      width: 15%;
-      text-align: right;
-      background-color: $nav-color;
-      color: #FFFFFF;
-    }
-
-    textarea {
-      height: 100px;
-    }
+  .input-group-addon {
+    width: 15%;
+    text-align: right;
+    background-color: $nav-color;
+    color: #FFFFFF;
   }
 
+  textarea {
+    height: 100px;
+  }
+}
 
 .new-container {
   background-color: #FFFFFF;
@@ -22,22 +21,16 @@
   color: #164167;
   border-radius: 5px;
 
-  #submit-resource-btn {
-
-  }
-
   #message{
     color: $flash-message-color;
     float: left;
     margin: 0 10px;
-    // z-index: 5;
-    /*font-size: $flash-message-size;*/
   }
 
   .counter {
     font-size: $flash-message-size;
-    // float: right;
     padding-right: 10px;
+
     span {
       float: right;
     }
@@ -51,8 +44,6 @@
     overflow: scroll;
   }
 }
-
-
 
 .hidden-button {
   display: none;
