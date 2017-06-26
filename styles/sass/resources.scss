@@ -14,13 +14,15 @@
   border-color: $nav-color;
   min-height: 207px;
 
+
   .resource-left {
     display: inline-block;
-    padding: 5px;
+    padding: 5px 15px;
     width: 90%;
 
     p {
       height: 40px;
+      text-overflow: ellipsis;
     }
   }
 
@@ -39,6 +41,8 @@
     cursor: pointer;
     i {
       font-size:  3em;
+      margin-top: 78px;
+      // margin-right: 5px;
     }
   }
 
@@ -53,11 +57,17 @@
     display: flex;
     }
   }
+
+  &.resourcedetails {
+    padding: 10px 25px;
+  }
 }
 
 .icons {
   display: grid;
   text-align: center;
+  color: #8a8383;
+
 }
 
 .liked {
@@ -97,4 +107,13 @@
 
 .hidden {
   display: none;
+}
+
+.avg_rating {
+  width: 20px;
+  text-align: left;
+}
+
+.glyphicon-heart {
+  cursor: pointer;
 }

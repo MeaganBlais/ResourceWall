@@ -196,5 +196,4 @@ $(document).ready(function () {
   registerFormHandler();
   logoutButton();
   loginFormHandler();
-  console.log(checkLogin() ? 'User is logged in' : 'User is logged out');
 });

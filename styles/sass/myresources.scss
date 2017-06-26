@@ -1,9 +1,6 @@
 .container {
   color: #FFFFFF;
 
-  h1 {
-    margin-top: 30px;
-  }
 
   #my-resources {
    margin-top: 20px;
@@ -13,4 +10,11 @@
    margin-top: 20px;
   }
 
+}
+
+.myresources-header {
+  h1 {
+    margin-top: 30px;
+    text-shadow: 1px 1px 5px black;
+  }
 }

@@ -12,12 +12,17 @@ function setAvgRating(data) {
     for (var i in data.ratings) {
       sum += Number(data.ratings[i].rating);
     }
-    avg = Math.round(sum / totalOfRatings);
+    avg = round(sum / totalOfRatings, 1);
   }
 
   return avg;
 
 };
+
+function round(value, decimals) {
+  return Number(Math.round(value+'e'+decimals)+'e-'+decimals);
+}
+
 
 
 function getUserRating (user_id, data) {

@@ -24,3 +24,19 @@
     padding: 3px 10px 3px 10px;
   }
 }
+
+#tag-form {
+
+  .input-group {
+    height: 34px;
+  }
+  .input-group-addon{
+    display: none;
+    padding: 3px 12px;
+  }
+
+  .twitter-typeahead {
+    border: 2pt solid $nav-color;
+    border-radius: 2px;
+  }
+}

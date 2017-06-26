@@ -154,12 +154,19 @@ function renderTagsResourceDetails(categories) {
   }
 }
 
+function hideTagForm() {
+  if (!checkLogin()) {
+    $('#tag-form').hide();
+  }
+}
+
 
 $(document).ready( function() {
 
   setAutocomplete();
   deleteTagHandler();
   tagFormHandler();
+  hideTagForm();
   // Variables to get information about the user and the resource id
   var resource_id = $('#url').data('id')
 

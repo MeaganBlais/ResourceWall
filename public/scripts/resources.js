@@ -33,7 +33,7 @@ var createResourceElement = function (resource) {
 
   //body
   var resourceBody = $("<section>").append(`
-    <p>${ trimDescription(resource.description) }</p>
+    <p>${resource.description}</p>
   `);
 
   //footer
@@ -62,10 +62,14 @@ var createResourceElement = function (resource) {
     </div>
   `);
 
-  if (resource.categories.length > 0) {
+  var numCategories = resource.categories.length;
+  if (numCategories > 0) {
     resourceFooter.append(`<div class="small-tag-container"></div>`);
-
-    for (category of resource.categories) {
+    var trimmedCategories = resource.categories.slice(0, 8);
+    if (numCategories > 9) {
+      trimmedCategories.push({user_id: '', name: '+' + String(numCategories - 9)})
+    }
+    for (category of trimmedCategories) {
       createTagComponent(category, resourceFooter.find('.small-tag-container'), "small")
     }
   }
@@ -233,7 +237,6 @@ var noResultsDisplay = function (num) {
 
 var trimDescription = function (description) {
   var max = 95;
-  console.log(description);
   if (description.length > max) {
     return description.slice(0, max - 3) + '...';
   }
