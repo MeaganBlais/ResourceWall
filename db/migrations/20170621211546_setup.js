@@ -79,13 +79,14 @@ exports.down = function(knex, Promise) {
   return Promise.all([
 
     // Clear the tables created
-    knex.schema.dropTable('users'),
-    knex.schema.dropTable('resources'),
-    knex.schema.dropTable('likes'),
-    knex.schema.dropTable('comments'),
-    knex.schema.dropTable('ratings'),
-    knex.schema.dropTable('categories'),
     knex.schema.dropTable('resources_categories'),
+    knex.schema.dropTable('categories'),
+    knex.schema.dropTable('ratings'),
+    knex.schema.dropTable('comments'),
+    knex.schema.dropTable('likes'),
+    knex.schema.dropTable('resources'),
+    knex.schema.dropTable('users'),
+
 
     // Creating the user table
     knex.schema.createTable('users', function (table) {
