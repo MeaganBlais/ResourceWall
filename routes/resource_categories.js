@@ -26,8 +26,8 @@ module.exports = (knex) => {
         user_id: req.session.user.id,
         resource_id: req.params.resource_id
       })
-      .then(() => {
-        res.status(200).send();
+      .then((result) => {
+        res.status(200).send(result[0]);
       })
 
 

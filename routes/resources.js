@@ -6,15 +6,16 @@ const router  = express.Router();
 module.exports = (knex) => {
 
   router.post("/", (req, res) => {
-
+    //route for adding a new resource
     const newResource = {
-      // id: , //needs to be randomly generated
+      //creates new resource object to be entered in database
       user_id: req.session.user.id,
       'URL': req.body.URL,
       title: req.body.title,
       description: req.body.description
     }
-
+    //separate arrays for new and pre-existing categories are sent from client
+    //has validation for if one of the arrays is empty
     let categories = req.body.categories;
     let newCategories = categories ? req.body.categories.new : [];
     let categoryIDs = categories ? req.body.categories.old : [];
@@ -23,7 +24,7 @@ module.exports = (knex) => {
     }
     let resource_id
     let promises = [];
-
+    //wait for all new categories to be added to categories table before inserting into resource_categories table
     if (newCategories) {
       newCategories.forEach((category) => {
         promises.push(knex('categories').insert({name: category})
@@ -34,13 +35,14 @@ module.exports = (knex) => {
           }));
       })
     }
+    //wait for new resource to be entered in table before adding to resource_categories table
     promises.push(knex('resources')
           .insert(newResource)
           .returning('id')
           .then((result) => {
             resource_id = result[0];
           }));
-
+    //when both steps complete, link resource, category and user in resource_categories table
     Promise.all(promises)
       .then((result) => {
         console.log('ID hopefully, ', resource_id);
@@ -66,14 +68,14 @@ module.exports = (knex) => {
 
 
   router.get("/", (req, res) => {
-
+    //route to get data for all resources in database
     knex('resources')
       //query to return an array of all resources
       .join('users', 'users.id', '=', 'resources.user_id')
       .select('resources.id AS resource_id', 'resources.URL', 'resources.title', 'resources.description',
         'user_id', 'users.user_name', 'users.avatar_URL')
       .orderBy('resource_id')
-      //loop through array of resources and add the a ratings property to each, containing an array of all ratings
+      //loop through array of resources and add the ratings property to each, containing an array of all ratings
       .then( (results) => {
         let promises = [];
         for (let resource of results) {
@@ -91,6 +93,7 @@ module.exports = (knex) => {
         return Promise.all(promises);
       })
       .then((results) => {
+        //same for likes
         let promises = [];
         for (let resource of results) {
           promises.push(knex('likes')
@@ -105,6 +108,7 @@ module.exports = (knex) => {
         return Promise.all(promises);
       })
       .then((results) => {
+        //same for comments
         let promises = [];
         for (let resource of results) {
           promises.push(knex('comments')
@@ -119,6 +123,7 @@ module.exports = (knex) => {
         return Promise.all(promises);
       })
       .then((results) => {
+        //same for categories
         let promises = [];
         for (let resource of results) {
           promises.push(
@@ -135,6 +140,8 @@ module.exports = (knex) => {
         return Promise.all(promises);
       })
       .then((results) => {
+        //returns an array of resource objects that have attached arrays for ratings, likes and categories
+        //and an integer for number of comments
         res.status(200).send(results);
       })
       .catch( (err) => {
@@ -146,7 +153,7 @@ module.exports = (knex) => {
   router.get("/:resource_id", (req, res) => {
     const resource_id = req.params.resource_id;
     knex('resources')
-      //query to return an array of all resources
+      //query to return one resource object for a given resource id
       .join('users', 'users.id', '=', 'resources.user_id')
       .select('resources.id AS resource_id', 'resources.URL', 'resources.title', 'resources.description',
         'user_id', 'users.user_name', 'users.avatar_URL')
@@ -169,6 +176,7 @@ module.exports = (knex) => {
         return Promise.all(promises);
       })
       .then((results) => {
+        //same for likes
         let promises = [];
         for (let resource of results) {
           promises.push(knex('likes')
@@ -183,6 +191,7 @@ module.exports = (knex) => {
         return Promise.all(promises);
       })
       .then((results) => {
+        //same for categories
         let promises = [];
         for (let resource of results) {
           promises.push(

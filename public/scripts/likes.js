@@ -1,5 +1,6 @@
 
 function doesUserLikeResource(user_id, likes) {
+  //check if User likes Resource if you pass the array or likes
   var alreadyLiked = false;
   for (var i in likes) {
     if (user_id === likes[i].user_id) {
@@ -10,12 +11,13 @@ function doesUserLikeResource(user_id, likes) {
 }
 
 function updateLikesCounter (resource) {
+  //get total amount of likes for a resource
   var totalOfLikes = resource.likes.length;
   return totalOfLikes;
 }
 
-//Send ajax request to write to likes table
 var addLike = function (resource_data) {
+  //Send ajax request to write to likes table for given resource
   var resource_id = resource_data.resource_id;
   $.ajax({
     method: "POST",
@@ -27,8 +29,8 @@ var addLike = function (resource_data) {
   })
 }
 
-//Send ajax request to delete to likes table
 var removeLike = function (resource_data) {
+  //Send ajax request to delete from likes table for given resource and user
     var resource_id = resource_data.resource_id;
     var user_id = JSON.parse(localStorage.getItem("userInfo")).id;
     $.ajax({
@@ -48,16 +50,17 @@ var removeLike = function (resource_data) {
   }
 
 
-
-$(document).ready(function () {
-
-
+var likeButtonHandler = function () {
+  //activate when user clicks on heart icon
   $('#all-resources').on('click', '.glyphicon-heart', function (event) {
-
+    //if user isn't logged in, exit function
+    if (!checkLogin()) {
+      return;
+    }
     var resource_data = $(this).closest('.resource-container').data('resource-data');
     var likes = resource_data.likes;
     var user_id = JSON.parse(localStorage.getItem("userInfo")).id;
-
+    //if user likes resource, call removeLike function, otherwise call the like function
     if (doesUserLikeResource(user_id, likes)) {
       removeLike(resource_data);
       $(this).removeClass('liked');
@@ -66,6 +69,8 @@ $(document).ready(function () {
       $(this).addClass('liked');
     }
   });
+}
 
-
+$(document).ready(function () {
+likeButtonHandler();
 })

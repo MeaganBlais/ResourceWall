@@ -1,4 +1,5 @@
 var categoriesArray = function () {
+  //return an array of category names that are currently in the database
   var categoryObjects = $('.container').data('categories');
   var categories = [];
   for (var category of categoryObjects) {
@@ -8,6 +9,7 @@ var categoriesArray = function () {
 }
 
 var setAutocomplete = function () {
+  //using twitter typeahead library to autocomplete tag suggestions
   // Defining the local dataset
   var categories = categoriesArray();
   // Constructing the suggestion engine
@@ -28,40 +30,35 @@ var setAutocomplete = function () {
   });
 }
 
-var createNewTagComponent = function (category) {
-  var $tag = $(`<span class="tag">${category} <i class="glyphicon glyphicon-remove"></i></span>`);
-  $('.tag-container').append($tag);
-}
 
 var deleteNewTagHandler = function () {
+  //deletes a newly added tag (not yet in database)
   $('.tag-container').on('click', '.glyphicon-remove', function () {
     $(this).closest('.tag').remove();
   })
 }
 
 var newTagFormHandler = function () {
+  //handles submissions for tag form on new resource page
   $('#tag-form').on('submit', function (event) {
     event.preventDefault();
     var category = $('#tag-search').val();
-    createNewTagComponent(category);
+    createTagComponent({name: category, user_id: getUserID()}, $('.tag-container'), "large", true);
     $('#tag-search').val('');
   })
 }
 
 var tagFormHandler = function () {
+  //handles submissions for tag form on resource details page
   var resource_id = $('.resource-container').data('resource-data').id;
-  var userID = getUserID();
   $('#tag-form').on('submit', function (event) {
     event.preventDefault();
     var name = $('#tag-search').val();
     if (doesCategoryExist(name)) {
       //get category id, send post request to resources_categories
-      var categoryID = getCategoryID(name);
-      for (var category of categoriesObjectArray()) {
-        if (category.id === categoryID) {
-          linkResourceToCategory(resource_id, category, userID);
-        }
-      }
+      var category = getCategoryObject(name);
+      category.user_id = getUserID();
+      linkResourceToCategory(resource_id, category);
     } else {
       //add category to database and to categories array
       addNewCategory(resource_id, name);
@@ -71,6 +68,7 @@ var tagFormHandler = function () {
 }
 
 var doesCategoryExist = function (name) {
+  //checks if a category name is already saved in the database using array stored on client
   if (categoriesArray().indexOf(name) >= 0) {
     return true;
   }
@@ -78,6 +76,7 @@ var doesCategoryExist = function (name) {
 }
 
 var getCategoryID = function (name) {
+  //returns the category id for a given category name
   for (var category of categoriesObjectArray()) {
     if (category.name === name) {
       return category.id;
@@ -86,6 +85,7 @@ var getCategoryID = function (name) {
 }
 
 var addNewCategory = function (resource_id, name, userID) {
+  //adds a brand new category name to the database and returns the result with category id
   var $data = {
     "name": name
   };
@@ -104,7 +104,8 @@ var addNewCategory = function (resource_id, name, userID) {
   })
 }
 
-var linkResourceToCategory = function (resource_id, category, userID) {
+var linkResourceToCategory = function (resource_id, category) {
+  //connects the resource, user and category ID in the resources_categories table
   var $data = {
     "category_id": category.id
   };
@@ -112,7 +113,7 @@ var linkResourceToCategory = function (resource_id, category, userID) {
     url: '/api/resources/' + resource_id + '/categories',
     method: 'POST',
     data: $data,
-    success: function () {
+    success: function (response) {
       createTagComponent(category, $('.tag-container'), "large", true);
       $('#tag-search').val('');
     }
@@ -121,6 +122,7 @@ var linkResourceToCategory = function (resource_id, category, userID) {
 }
 
 var deleteTagHandler = function () {
+  //when X is clicked, deletes the entry from resources_categories table
   $('.tag-container').on('click', '.glyphicon-remove', function () {
     var $tag = $(this).closest('.tag');
     var resource_id = $('#url').data('id');
@@ -135,7 +137,8 @@ var deleteTagHandler = function () {
   })
 }
 
-var createTagComponent = function (category, destination, size, editable, userID) {
+var createTagComponent = function (category, destination, size, editable) {
+  //creates a new tag component, with a few options, and renders to the destination
   var $tag = $(`<span class="tag">${category.name} </span>`);
   $tag.data('tag-data', category);
   if (size === "small") {
@@ -148,6 +151,8 @@ var createTagComponent = function (category, destination, size, editable, userID
 }
 
 var getTagsArray = function () {
+  //get an array of all tags on the New Resource page, separating in to new and old
+    //new tags will be added to categories table before resources_categories table (handled on server)
   var tags = {
     new: [],
     old: []
@@ -168,10 +173,20 @@ var getTagsArray = function () {
 }
 
 var categoriesObjectArray = function () {
+  //returns an array of category objects for all categories currently in database (stored in browser via data attribute)
   var categoryObjects = $('.container').data('categories');
   var categories = [];
   for (var category of categoryObjects) {
     categories.push(category);
   }
   return categories;
+}
+
+var getCategoryObject = function (name) {
+  //returns object with name and ID for a given category name that exists in the database
+  for (var category of categoriesObjectArray()) {
+    if (category.name === name) {
+      return category;
+    }
+  }
 }

@@ -1,54 +1,45 @@
-
 function setAvgRating(data) {
-
+  //get average rating for a given resource if passed resource data
   var sum = 0;
   var totalOfRatings = data.ratings.length;
   var avg = 0;
-
   if (totalOfRatings === 0) {
     avg = 0;
   } else {
-
     for (var i in data.ratings) {
       sum += Number(data.ratings[i].rating);
     }
     avg = round(sum / totalOfRatings, 1);
   }
-
   return avg;
-
 };
 
 function round(value, decimals) {
+  //round a number to the given number of decimals
   return Number(Math.round(value+'e'+decimals)+'e-'+decimals);
 }
 
 
 
 function getUserRating (user_id, data) {
+  //get the rating for a given user and resource
   var user_rating = 0;
-
   if (data.ratings.length === 0) {
     //The resource has no ratings yet
     return 0;
 
   } else {
     //The resource has ratings, let's check the array of ratings
-
     for (var i in data.ratings) {
       //go through all ratings to find if the user logged in has already rated the resource
-
       if (data.ratings[i].user_id === user_id) {
         //user logged in has rated the resource, get the rating
-
         return data.ratings[i].rating;
       }
     }
-
     //The user was not found in the array of ratings, so he/she has not rated the resource yet
     return 0;
   }
-
 };
 
 
@@ -68,7 +59,6 @@ function analyseRating(data, new_rating) {
   if (Number(user_rating) === 0) {
     //user has not rating yet. send a POST request.
     $data = { rating: new_rating }
-
       $.ajax({
         method: "POST",
         url: "/api/resources/" + resource_id + "/ratings",

@@ -18,7 +18,6 @@
 
 
   <!-- Our Javascript -->
-  <script type="text/javascript" src="/scripts/app.js"></script>
   <script type="text/javascript" src="/scripts/user-functions.js"></script>
   <script type="text/javascript" src="/scripts/char-counter.js"></script>
   <script type="text/javascript" src="/scripts/tags.js"></script>
@@ -33,9 +32,7 @@
   <div class="container" data-categories="<%= JSON.stringify(categories) %>">
     <div class="new-container">
       <h1>Add New Resource</h1>
-
       <form id="new-resource">
-
         <div class="input-group">
           <span class="input-group-addon">URL (*)</span>
           <input id="URL" type="URL" name="URL" class="form-control" placeholder="Resource URL">
@@ -63,7 +60,6 @@
           <input id="tag-search" type="text" name="tags" class="form-control" placeholder="Enter tags..." autocomplete="off">
           <button type="submit" class="btn btn-default hidden-button">+</button>
         </div>
-
       </form>
     </div>
 
