@@ -39,7 +39,7 @@
     <!-- Example Resource -->
       <article class="resource-container resourcedetails" id='resource-<%= resource_details.id %>' data-resource-data="<%= JSON.stringify(resource_details) %>">
         <header>
-          <h1><a id="url" href="<%= resource_details.URL%>" data-id="<%= resource_details.id %>"><%= resource_details.title %></a></h1>
+          <h1><a id="url" href="<%= resource_details.URL%>" target="_blank" data-id="<%= resource_details.id %>"><%= resource_details.title %></a></h1>
         </header>
         <section>
           <p><%= resource_details.description %></p>

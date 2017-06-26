@@ -20,12 +20,12 @@ var registerFormHandler = function () {
       message += "'Password' and 'Confirm Password' are not the same. ";
     }
 
-    if ( ($("#avatar").val()) && !( (/[jJ][pP][gG]$/.test($("#avatar").val())) ||
-      (/[pP][nN][gG]$/.test($("#avatar").val())) ||
-      (/[gG][iI][fF]$/.test($("#avatar").val())) )) {
-        validations = false;
-        message += "Avatar must be in one of the following formats: jpg, png or gif.";
-    }
+    // if ( ($("#avatar").val()) && !( (/[jJ][pP][gG]$/.test($("#avatar").val())) ||
+    //   (/[pP][nN][gG]$/.test($("#avatar").val())) ||
+    //   (/[gG][iI][fF]$/.test($("#avatar").val())) )) {
+    //     validations = false;
+    //     message += "Avatar must be in one of the following formats: jpg, png or gif.";
+    // }
 
     $('#register_message').text(message);
 
@@ -158,18 +158,18 @@ function putUpdate(){
 
   }
 
-  if ($("#avatar").val()) {
-    if ($("#avatar").val() !== "/images/placeholder-user.png") {
+  // if ($("#avatar").val()) {
+  //   if ($("#avatar").val() !== "/images/placeholder-user.png") {
 
-      if (!(/^[hH][tT][tT][pP]:\/\//.test($("#avatar").val())) ||
-        !( (/[jJ][pP][gG]$/.test($("#avatar").val())) ||
-          (/[pP][nN][gG]$/.test($("#avatar").val())) ||
-          (/[gG][iI][fF]$/.test($("#avatar").val())))) {
-        validations = false;
-        message += "The avatar must start with http:// and must be in one of the following formats: jpg, png or gif.";
-      }
-    }
-  }
+  //     if (!(/^[hH][tT][tT][pP]:\/\//.test($("#avatar").val())) ||
+  //       !( (/[jJ][pP][gG]$/.test($("#avatar").val())) ||
+  //         (/[pP][nN][gG]$/.test($("#avatar").val())) ||
+  //         (/[gG][iI][fF]$/.test($("#avatar").val())))) {
+  //       validations = false;
+  //       message += "The avatar must start with http:// and must be in one of the following formats: jpg, png or gif.";
+  //     }
+  //   }
+  // }
 
   $('#register_message').text(message);
 

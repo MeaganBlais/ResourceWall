@@ -17,11 +17,10 @@ module.exports = (knex) => {
   })
 
   router.post("/", (req, res) => {
-    //get category from request body
-    //if category doesn't exist, add to categories table
     //then add entry to resource_categories table
     console.log(req.body);
     knex('resources_categories')
+      .returning('*')
       .insert({
         category_id: req.body.category_id,
         user_id: req.session.user.id,

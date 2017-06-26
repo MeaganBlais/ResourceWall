@@ -50,15 +50,21 @@ var newTagFormHandler = function () {
 
 var tagFormHandler = function () {
   var resource_id = $('.resource-container').data('resource-data').id;
+  var userID = getUserID();
   $('#tag-form').on('submit', function (event) {
     event.preventDefault();
-    var category = $('#tag-search').val();
-    if (doesCategoryExist(category)) {
+    var name = $('#tag-search').val();
+    if (doesCategoryExist(name)) {
       //get category id, send post request to resources_categories
-      console.log(getCategoryID(category));
+      var categoryID = getCategoryID(name);
+      for (var category of categoriesObjectArray()) {
+        if (category.id === categoryID) {
+          linkResourceToCategory(resource_id, category, userID);
+        }
+      }
     } else {
       //add category to database and to categories array
-      addNewCategory(resource_id, category);
+      addNewCategory(resource_id, name);
       //add new category id to resources_categories
     }
   })
@@ -79,7 +85,7 @@ var getCategoryID = function (name) {
   }
 }
 
-var addNewCategory = function (resource_id, name) {
+var addNewCategory = function (resource_id, name, userID) {
   var $data = {
     "name": name
   };
@@ -91,14 +97,14 @@ var addNewCategory = function (resource_id, name) {
       var category = {
         'name': response.name,
         id: response.id,
-        user_id: getUserID()
-      }
+        user_id: userID
+    }
       linkResourceToCategory(resource_id, category);
     }
   })
 }
 
-var linkResourceToCategory = function (resource_id, category) {
+var linkResourceToCategory = function (resource_id, category, userID) {
   var $data = {
     "category_id": category.id
   };
@@ -106,7 +112,7 @@ var linkResourceToCategory = function (resource_id, category) {
     url: '/api/resources/' + resource_id + '/categories',
     method: 'POST',
     data: $data,
-    success: function (response) {
+    success: function () {
       createTagComponent(category, $('.tag-container'), "large", true);
       $('#tag-search').val('');
     }
@@ -129,13 +135,13 @@ var deleteTagHandler = function () {
   })
 }
 
-var createTagComponent = function (category, destination, size, editable) {
+var createTagComponent = function (category, destination, size, editable, userID) {
   var $tag = $(`<span class="tag">${category.name} </span>`);
   $tag.data('tag-data', category);
   if (size === "small") {
     $tag.addClass('tag-small');
   }
-  if (category.user_id === getUserID() && editable) {
+  if ((category.user_id === getUserID()) && editable) {
     $tag.append(`<i class="glyphicon glyphicon-remove"></i>`);
   }
   destination.append($tag);

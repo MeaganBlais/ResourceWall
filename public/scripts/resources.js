@@ -28,7 +28,7 @@ var createResourceElement = function (resource) {
 
   //header
   var resourceHeader = $("<header>").append(`
-    <h4><a href="${resource.URL}"></a></h1>
+    <h4><a href="${resource.URL}" target="_blank"></a></h1>
   `);
   resourceHeader.find('a').text(resource.title);
 

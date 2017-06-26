@@ -18,6 +18,9 @@ module.exports = (knex) => {
     let categories = req.body.categories;
     let newCategories = categories ? req.body.categories.new : [];
     let categoryIDs = categories ? req.body.categories.old : [];
+    if (!categoryIDs) {
+      categoryIDs = [];
+    }
     let resource_id
     let promises = [];
 
