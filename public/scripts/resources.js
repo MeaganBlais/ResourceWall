@@ -28,13 +28,15 @@ var createResourceElement = function (resource) {
 
   //header
   var resourceHeader = $("<header>").append(`
-    <h4><a href="${resource.URL}">${resource.title}</a></h1>
+    <h4><a href="${resource.URL}"></a></h1>
   `);
+  resourceHeader.find('a').text(resource.title);
 
   //body
   var resourceBody = $("<section>").append(`
-    <p>${resource.description}</p>
+    <p></p>
   `);
+  resourceBody.find('p').text(trimDescription(resource.description));
 
   //footer
   var resourceFooter = $("<footer>").append(`
@@ -236,7 +238,7 @@ var noResultsDisplay = function (num) {
 }
 
 var trimDescription = function (description) {
-  var max = 95;
+  var max = 77;
   if (description.length > max) {
     return description.slice(0, max - 3) + '...';
   }

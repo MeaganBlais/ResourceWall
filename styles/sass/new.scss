@@ -30,13 +30,17 @@
     color: $flash-message-color;
     float: left;
     margin: 0 10px;
+    // z-index: 5;
     /*font-size: $flash-message-size;*/
   }
 
   .counter {
     font-size: $flash-message-size;
-    float: right;
+    // float: right;
     padding-right: 10px;
+    span {
+      float: right;
+    }
   }
 
   .over-char-limit{

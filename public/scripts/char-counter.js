@@ -29,8 +29,8 @@ $(document).ready(() => {
 
   });
 
-  $('#new-resource').find('textarea').on('keyup keypress input', function(event) {
-  });
+  // $('#new-resource').find('textarea').on('keyup keypress input', function(event) {
+  // });
 
 
   function checkCounter (element) {
@@ -39,7 +39,7 @@ $(document).ready(() => {
     charRemaining = getRemChar(element.val().length);
 
     // 'this' uses jQuery to traverse up the DOM tree
-    let counter = element.closest('form').find('.counter'); //CHANGE THIS
+    let counter = element.closest('form').find('.counter span'); //CHANGE THIS
 
     counter.text(charRemaining);
 

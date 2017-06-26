@@ -18,18 +18,20 @@ function createCommentElement (commentData) {
 
 
   //create the structure of comment to be included in the html
-  var comment = (`<article  class="comment_container">
+  var comment = $(`<article  class="comment_container">
                   <header>
                     <img class="avatar" src ="${commentData.avatar_URL}">
                     <span class="input_user" data-id='${commentData.user_id}'>${commentData.user_name}</span>
                   </header>
                   <div class="read-comment">
-                    <span>${commentData.comment}</span>
+                    <span></span>
                   </div>
                   <footer>
                     <span class="daysAgo">${diffDays}</span>
                   </footer>
                 </article>`);
+
+  comment.find('.read-comment').find('span').text(commentData.comment);
 
   //return the structure to append to html
   return comment;
