@@ -1,0 +1,29 @@
+#profile {
+  background-color: #FFFFFF;
+  padding: 20px;
+  border-radius: 5px;
+  color: black;
+
+    .input-group {
+      margin: 15px 0;
+      width: 100%;
+
+      .input-group-addon {
+        width: 15%;
+        text-align: right;
+        background-color: $nav-color;
+        color: #FFFFFF;
+      }
+    }
+
+    p {
+      height: 40px;
+      padding: 7px;
+      text-overflow: ellipsis;
+    }
+
+    .avatar-big {
+      width: 200px;
+      height: auto;
+    }
+}
