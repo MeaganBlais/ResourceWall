@@ -14,11 +14,13 @@ module.exports = (knex) => {
       .then(()=> {
         res.status(200).send();
       })
+      .catch((err) => {
+        throw err;
+      })
   })
 
   router.post("/", (req, res) => {
     //then add entry to resource_categories table
-    console.log(req.body);
     knex('resources_categories')
       .returning('*')
       .insert({
@@ -29,10 +31,11 @@ module.exports = (knex) => {
       .then(() => {
         res.status(200).send();
       })
-
+      .catch((err) => {
+        throw err;
+      })
 
   })
-
 
   return router;
 }

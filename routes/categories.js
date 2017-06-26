@@ -11,13 +11,14 @@ module.exports = (knex) => {
       .insert({name: req.body.name})
       .returning('*')
       .then((result) => {
-        console.log(result);
         res.json(result[0])
         res.status(200)
         res.send()
-      });
+      })
+      .catch( (err) => {
+        throw err;
+      })
   });
-
 
   return router;
 }

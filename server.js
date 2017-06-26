@@ -40,7 +40,6 @@ app.use(cookieSession({
   secret: 'sean'
 }));
 
-
 app.use("/styles", sass({
   src: __dirname + "/styles",
   dest: __dirname + "/public/styles",
@@ -58,7 +57,6 @@ app.use("/api/resources/:resource_id/ratings", ratingsRoutes(knex));
 app.use("/api/resources/:resource_id/likes", likeRoutes(knex));
 app.use("/api/resources/:resource_id/categories", resourceCategoryRoutes(knex));
 
-
 // Home page
 app.get("/", (req, res) => {
   res.render("index");
@@ -73,28 +71,19 @@ app.get("/register", (req, res) => {
 app.get("/new", (req, res) => {
   knex('categories').select()
     .then((results) => {
-      console.log(results);
       res.render("new", {categories: results});
     })
 });
 
-// My Resources page --- need to switch once page is built
+// My Resources page
 app.get("/myresources", (req, res) => {
   res.render("myresources");
 });
 
-app.listen(PORT, () => {
-  console.log("Example app listening on port " + PORT);
-});
-
-
 // Resource Details page
 app.get("/resources/:resource_id", (req, res) => {
 
-  // Get the resource id from request
   let resource_id = req.params.resource_id;
-
-  // Declaring a variable to get the query result
   let templateVars = {};
 
   // Getting the resource detail from database
@@ -108,7 +97,6 @@ app.get("/resources/:resource_id", (req, res) => {
         .select()
         .then((categories) => {
           templateVars.categories = categories;
-          console.log('returning', templateVars);
           res.render("resource_detail.ejs", templateVars);
         })
     })
@@ -118,39 +106,11 @@ app.get("/resources/:resource_id", (req, res) => {
 
 });
 
-// Resource Comments
-app.get("/resources/:resource_id/comments", (req, res) => {
-
-  // Get the resource id from request
-  let resource_id = req.params.resource_id;
-
-  // Declaring a variable to get the query result
-  let comments;
-
-  // Getting the resource detail from database
-  knex('comments')
-    .join('users', 'users.id', '=', 'comments.user_id')
-    .where('comments.resource_id', resource_id)
-    .orderBy('comments.created_at', 'desc')
-    .select('comments.id as comment_id', 'comments.comment', 'comments.created_at', 'users.user_name', 'users.avatar_URL', 'users.id as user_id')
-    .then((results) => {
-
-      return res.json(results);
-
-    })
-    .catch(function(error) {
-      console.error(error);
-    });
-
-});
 
 // Profile page
 app.get("/profile", (req, res) => {
 
-  // Get the user id
   let user_id = req.session.user.id;
-
-  // Declaring a variable to get the query result
   let user_profile;
 
   // Getting the user detail from database
@@ -158,11 +118,14 @@ app.get("/profile", (req, res) => {
     .select('users.id', 'users.user_name', 'users.full_name', 'users.email', 'users.avatar_URL')
     .where({id: user_id})
     .then((results) => {
-      //render the page to show the profile details
       res.render("profile.ejs", {users: results[0]});
     })
     .catch(function(error) {
       console.error(error);
     });
-
 });
+
+app.listen(PORT, () => {
+  console.log("Example app listening on port " + PORT);
+});
+

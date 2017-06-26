@@ -6,7 +6,7 @@ const router  = express.Router({mergeParams: true});
 module.exports = (knex) => {
 
   router.post("/", (req, res) => {
-
+    // adding a resource 'rating' to database
     let rating = {
       user_id: req.session.user.id,
       resource_id: req.params.resource_id,
@@ -25,6 +25,7 @@ module.exports = (knex) => {
   });
 
   router.delete("/", (req, res) => {
+    // deleting a resource 'rating' from database
     knex('ratings')
       .del()
       .where({
@@ -40,6 +41,7 @@ module.exports = (knex) => {
   });
 
   router.put("/", (req,res) => {
+    // updating a resource 'rating' in the database
     knex('ratings')
       .where({
         resource_id: req.params.resource_id,
