@@ -18,12 +18,16 @@
 4. Fix to binaries for sass: `npm rebuild node-sass`
 5. Run migrations: `npm run knex migrate:latest`
   - Check the migrations folder to see what gets created in the DB
-6. Run the seed: `npm run knex seed:run`
-  - Check the seeds file to see what gets seeded in the DB
-7. Run the server: `npm run local`
-8. Visit `http://localhost:8080/`
+6. Run the server: `npm run local`
+7. Visit `http://localhost:8080/`
 
 ## Dependencies
 
 - Node 5.10.x or above
 - NPM 3.8.x or above
+
+## Screenshots
+!["Screenshot of main page"](https://github.com/SeanSFitz/ResourceWall/blob/master/screenshots/MainPage.png)
+!["Screenshot of my resources"](https://github.com/SeanSFitz/ResourceWall/blob/master/screenshots/MyResources.png)
+!["Screenshot of resource details & comments"](https://github.com/SeanSFitz/ResourceWall/blob/master/screenshots/ResourceDetails%2BComments.png)
+!["Screenshot of responsive main page"](https://github.com/SeanSFitz/ResourceWall/blob/master/screenshots/ResponsiveDesign.png)
