@@ -36,14 +36,17 @@
     <% include partials/_nav %>
 
     <div class="container" id="all-resources" data-categories="<%= JSON.stringify(categories) %>">
-    <!-- Example Resource -->
+
       <article class="resource-container resourcedetails" id='resource-<%= resource_details.id %>' data-resource-data="<%= JSON.stringify(resource_details) %>">
+
         <header>
           <h1><a id="url" href="<%= resource_details.URL%>" target="_blank" data-id="<%= resource_details.id %>"><%= resource_details.title %></a></h1>
         </header>
+
         <section>
           <p><%= resource_details.description %></p>
         </section>
+
         <footer>
           <span>
             <img class="avatar" src="<%= resource_details.avatar_URL%>">
@@ -87,14 +90,14 @@
             <span class="input_user" data-id=''>Username</span>
           </header>
           <div class="input-comment">
-            <textarea type="text" class="form-control" placeholder="Your comment..." name="comment"></textarea>
-
-
+            <textarea type="text" class="form-control" placeholder="Your comment..." name="comment" id="user_comment"></textarea>
           </div>
           <footer class="comment_footer">
-            <p id="message"></p> <!-- flash messages will be shown here -->
             <button class="btn btn-default" id="input-comment-btn" type="submit">Submit</button>
-            <span class="counter">255</span>
+              <p id="message"></p> <!-- flash messages will be shown here -->
+            <div class="counter">
+              <span>255</span>
+            </div>
           </footer>
         </form>
       </article>

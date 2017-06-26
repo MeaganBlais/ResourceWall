@@ -78,8 +78,8 @@ function loadComments (resource_id) {
             renderComments(resource);
             updateCommentsCounter(resource);
     })
-    .fail(function () {
-      console.log("error");
+    .fail(function (err) {
+      console.error(err);
     })
 }
 
@@ -96,7 +96,6 @@ function loadDataResource(resource_id) {
       renderTagsResourceDetails(data.categories);
       var user_id = localStorage.getItem("userInfo") ? JSON.parse(localStorage.getItem("userInfo")).id : '';
 
-      // var data = results[0];
 
       // Setting the initial rating
       $(".rateYo").rateYo({
@@ -169,6 +168,7 @@ $(document).ready( function() {
   deleteTagHandler();
   tagFormHandler();
   hideTagForm();
+
   // Variables to get information about the user and the resource id
   var resource_id = $('#url').data('id')
 
@@ -197,34 +197,52 @@ $(document).ready( function() {
     //prevent to change the page
     event.preventDefault();
 
+    var validations = true;
+    var message = '';
+    $counter = $(this).closest("form").find(".counter span");
+
+    if (emptyFiled($('#user_comment').val())) {
+      validations = false;
+      message = "Your comment is empty!";
+    }
+
+    if ($('#user_comment').val().trim().length > 255) {
+      validations = false;
+      message = "Your comment is too long! "
+    }
+
+    $('#message').text(message);
+
+
     //get data from the form
-    $textarea = $(this).closest("form").find("textarea");
-    $message = $(this).closest("form").find("#message");
-    $counter = $(this).closest("form").find(".counter");
+    // $textarea = $(this).closest("form").find("textarea");
+    // $message = $(this).closest("form").find("#message");
 
     //prepare data for Ajax calling
-    $data = $textarea.serialize();
+    $data = $('#user_comment').serialize();
 
     //get the text (without spaces) and its lenght to validate
-    $text = $textarea.val().trim();
-    $textLength = $text.length;
+    // $text = $textarea.val().trim();
+    // $textLength = $text.length;
 
 
-    if ($text === "" || $text === null) {
+    // if ($text === "" || $text === null) {
 
-      //if text is null, show a message for empty text
-      $message.text("Your comment is empty!");
-      $textarea.focus();
+    //   //if text is null, show a message for empty text
+    //   $message.text("Your comment is empty!");
+    //   $textarea.focus();
 
-    } else if ($textLength > 255) {
+    // } else if ($textLength > 255) {
 
-      //if text exceed 140 characters, show a message for too long text
-      $message.text("Your message is too long!");
-      $textarea.focus();
+    //   //if text exceed 140 characters, show a message for too long text
+    //   $message.text("Your message is too long!");
+    //   $textarea.focus();
 
-    } else {
+    // } else {
 
       //validations are ok, comment will be send, and the area for comments will be re-loaded
+
+    if (validations) {
       $.post(`/api/resources/${resource_id}/comments`, $data)
 
         .done(function () {
@@ -232,8 +250,8 @@ $(document).ready( function() {
               });
 
       //hidden the message if it is shown, clear the textarea, and reset the char-counter
-      $message.text("");
-      $textarea.val("").focus();
+      $('#message').text("");
+      $('#user_comment').val("").focus();
       $counter.text("255");
     }
 

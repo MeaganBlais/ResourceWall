@@ -30,7 +30,6 @@
 
     <div class="registration-container">
       <h1>Profile</h1>
-
       <div id="profile">
         <img class="avatar-big" src="<%= users.avatar_URL %>">
         <div class="input-group">
@@ -47,31 +46,35 @@
 
       <div id="profileUpdate">
         <form class="updates" onSubmit=" return putUpdate();">
+
           <img class="avatar-big" src="<%= users.avatar_URL %>">
+
           <div class="input-group">
             <span class="input-group-addon" id="basic-addon1">Profile Picture</span>
             <input type="text" class="form-control" placeholder="image url" name="avatar_URL" value="<%= users.avatar_URL %>"  maxlength="255" id="avatar">
           </div>
+
           <div class="input-group">
             <span class="input-group-addon" id="basic-addon1">Username (*)</span>
             <input type="text" class="form-control" placeholder="<%= users.user_name %>" name="user_name" value="<%= users.user_name %>" maxlength="20" id="username">
           </div>
+
           <div class="input-group">
             <span class="input-group-addon" id="basic-addon1">Fullname (*)</span>
             <input type="text" class="form-control" placeholder="<%= users.full_name %>" name="full_name" value="<%= users.full_name %>" maxlength="40" id="fullname">
           </div>
+
           <div class="input-group">
             <span class="input-group-addon" id="basic-addon1">Email (*)</span>
             <input type="email" class="form-control" placeholder="<%= users.email %>" name="email" value="<%= users.email %>"  maxlength="255" id="email">
           </div>
+
           <p id="register_message"></p>
           <button class="btn btn-default" id="register-btn">Update</button>
         </form>
       </div>
     </div>
-
-
-
   </div>
+
 </body>
 </html>
