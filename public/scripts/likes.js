@@ -1,4 +1,4 @@
-
+// checking if user has previously 'liked' resource
 function doesUserLikeResource(user_id, likes) {
   var alreadyLiked = false;
   for (var i in likes) {
@@ -9,6 +9,7 @@ function doesUserLikeResource(user_id, likes) {
   return alreadyLiked;
 }
 
+// updating resource total likes
 function updateLikesCounter (resource) {
   var totalOfLikes = resource.likes.length;
   return totalOfLikes;
@@ -51,7 +52,7 @@ var removeLike = function (resource_data) {
 
 $(document).ready(function () {
 
-
+// adding or removing 'liked' class for users view
   $('#all-resources').on('click', '.glyphicon-heart', function (event) {
 
     var resource_data = $(this).closest('.resource-container').data('resource-data');

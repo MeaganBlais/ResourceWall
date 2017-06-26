@@ -86,9 +86,7 @@ module.exports = (knex) => {
       user_name: req.body.user_name,
       full_name: req.body.full_name,
       email: req.body.email,
-      // password: ,
       avatar_URL: req.body.avatar_URL  ? req.body.avatar_URL : "/images/placeholder-user.png"
-      // date_join:
     })
     .then( (result) => {
       res.json(result);
