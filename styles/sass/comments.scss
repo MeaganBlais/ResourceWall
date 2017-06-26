@@ -1,7 +1,8 @@
 .comment_container {
   background-color: #FFFFFF;
   border-radius: 5px;
-  padding: 5px;
+  border: 2pt solid $nav-color;
+  padding: 15px;
   margin-top: 15px;
   overflow: auto;
   color: black;

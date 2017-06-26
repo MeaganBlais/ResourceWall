@@ -13,6 +13,19 @@
     margin-right: 20px;
     margin-top: 5px;
   }
+
+  .btn-default {
+    color: $nav-color;
+    margin-left: 10px;
+  }
+
+  .form-control {
+    margin-left: 10px;
+  }
+
+  a:link {
+    text-decoration: none;
+  }
 }
 
 .logged-out {
@@ -28,3 +41,21 @@
   width: auto;
 }
 
+.navbar-brand {
+
+  span {
+  font-family: helvetica;
+  font-size: 20pt;
+  }
+}
+
+@media (min-width: 500px) {
+  .navbar-brand {
+
+  span {
+  font-family: helvetica;
+  font-size: 40pt;
+  }
+}
+
+}
