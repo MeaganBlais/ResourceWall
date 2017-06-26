@@ -27,7 +27,6 @@
 - NPM 3.8.x or above
 
 ## Screenshots
-!["Screenshot of main page"](https://github.com/SeanSFitz/ResourceWall/blob/master/screenshots/MainPage.png)
 !["Screenshot of my resources"](https://github.com/SeanSFitz/ResourceWall/blob/master/screenshots/MyResources.png)
 !["Screenshot of resource details & comments"](https://github.com/SeanSFitz/ResourceWall/blob/master/screenshots/ResourceDetails%2BComments.png)
 !["Screenshot of responsive main page"](https://github.com/SeanSFitz/ResourceWall/blob/master/screenshots/ResponsiveDesign.png)
