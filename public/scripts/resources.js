@@ -11,14 +11,18 @@ var loadResources = function (callback) {
 }
 
 var createResourceElement = function (resource) {
+  var $container = $(`<div class="grid-item"></div>`);
   var $resource = $(`<article id='resource-${resource.resource_id}'>`).addClass('resource-container');
+  $container.addClass('col-xs-12 col-md-4');
+  var $left = $(`<div class="resource-left"></div>`);
+  var $right = $(`<div class="resource-right"><i class="glyphicon glyphicon-menu-right"></i></div>`);
   var user_id = localStorage.getItem("userInfo") ? JSON.parse(localStorage.getItem("userInfo")).id : '';
 
   $resource.data('resource-data', resource);
 
   //header
   var resourceHeader = $("<header>").append(`
-    <h1><a href="${resource.URL}">${resource.title}</a></h1>
+    <h3><a href="${resource.URL}">${resource.title}</a></h1>
   `);
 
   //body
@@ -57,9 +61,12 @@ var createResourceElement = function (resource) {
     }
   }
 
-  $resource.append(resourceHeader);
-  $resource.append(resourceBody);
-  $resource.append(resourceFooter);
+  $left.append(resourceHeader);
+  $left.append(resourceBody);
+  $left.append(resourceFooter);
+  $resource.append($left);
+  $resource.append($right);
+  $container.append($resource);
 
   // Setting the initial rating
   $resource.find(".rateYo").rateYo({
@@ -109,7 +116,7 @@ var createResourceElement = function (resource) {
   //Set the total of comments
   $resource.find(".totalOfComments").text(resource.comments);
 
-  return $resource;
+  return $container;
 }
 
 var clearResources = function () {

@@ -1,5 +1,24 @@
+html {
+  // background-color: #EEE;
+
+
+  //filter: blur(20px);
+
+
+}
+
 body {
-  background-color: #EEE;
+  background-color: rgba(0,0,0,0);
+  background-image: url('/images/rsz_pexels-photo.jpg');
+
+  background-position: center center;
+
+  background-repeat: no-repeat;
+
+  background-attachment: fixed;
+
+  background-size: cover;
+
 
   .container {
     // width: 550px;

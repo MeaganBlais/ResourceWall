@@ -1,9 +1,37 @@
+.grid-item {
+  padding: 10px;
+}
+
 .resource-container {
   background-color: #FFFFFF;
   border-radius: 5px;
-  padding: 5px;
-  margin-bottom: 10px;
+  padding: 0px 0px 0px 0px;
+  //margin-bottom: 10px;
+  height: 100%;
+  position: relative;
+  overflow: hidden;
 
+  .resource-left {
+    display: inline-block;
+    padding: 5px;
+    width: 90%;
+  }
+
+  .resource-right {
+    background-color: $nav-color;
+    color: #FFFFFF;
+    display: inline-block;
+    height: 100%;
+    width: 10%;
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    text-align: center;
+    cursor: pointer;
+    i {
+      font-size:  3em;
+    }
+  }
 
   footer {
     overflow: auto;
