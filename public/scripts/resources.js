@@ -1,4 +1,5 @@
 var loadResources = function (callback) {
+//get data for all resources from the server
   $.ajax({
     url: '/api/resources',
     method: 'GET',
@@ -11,6 +12,7 @@ var loadResources = function (callback) {
 }
 
 var createResourceElement = function (resource) {
+  //create HTML for Resource element to be rendered by calling function
   var $container = $(`<div class="grid-item"></div>`);
   var $resource = $(`<article id='resource-${resource.resource_id}'>`).addClass('resource-container');
   $container.addClass('col-xs-12 col-md-4');
@@ -22,23 +24,21 @@ var createResourceElement = function (resource) {
         </div>
       </a>
   `);
+  //get current user id from localStorage
   var user_id = localStorage.getItem("userInfo") ? JSON.parse(localStorage.getItem("userInfo")).id : '';
-
+  //store data for this resource using jQuery data function
   $resource.data('resource-data', resource);
-
-  //header
+  //header to be appended later
   var resourceHeader = $("<header>").append(`
     <h4><a href="${resource.URL}" target="_blank"></a></h1>
   `);
   resourceHeader.find('a').text(resource.title);
-
-  //body
+  //body to be appended later
   var resourceBody = $("<section>").append(`
     <p></p>
   `);
   resourceBody.find('p').text(trimDescription(resource.description));
-
-  //footer
+  //footer to be appended later
   var resourceFooter = $("<footer>").append(`
     <div class="footer-top">
     <span>
@@ -63,11 +63,12 @@ var createResourceElement = function (resource) {
     </span>
     </div>
   `);
-
+  //add tags for each category associated with this resource
   var numCategories = resource.categories.length;
   if (numCategories > 0) {
     resourceFooter.append(`<div class="small-tag-container"></div>`);
     var trimmedCategories = resource.categories.slice(0, 8);
+    //if there are too many categories to display, trim the array to a number that will fit, say how many are not being shown
     if (numCategories > 9) {
       trimmedCategories.push({user_id: '', name: '+' + String(numCategories - 9)})
     }
@@ -75,50 +76,40 @@ var createResourceElement = function (resource) {
       createTagComponent(category, resourceFooter.find('.small-tag-container'), "small")
     }
   }
-
+  //organize the elements for displau
   $left.append(resourceHeader);
   $left.append(resourceBody);
   $left.append(resourceFooter);
   $resource.append($left);
   $resource.append($right);
   $container.append($resource);
-
+  //SET STAR RATINGS USEING RATEYO PLUGIN
   // Setting the initial rating
   $resource.find(".rateYo").rateYo({
     rating: getUserRating(user_id, resource),
     fullStar: true
   });
-
-
   // Setting the parameters of star ratings
   $resource.find(".rateYo").rateYo("option", "starWidth", "20px"); // Size of the stars
   $resource.find(".rateYo").rateYo("option", "ratedFill", "#d8505c"); // Color of the rated stars
   $resource.find(".rateYo").rateYo("option", "fullStar", true); // Setting ratings as full star
   $resource.find(".rateYo").rateYo("option", "readOnly", !checkLogin()); //Setting read only if user is not logged in
-
   //Set the average of ratings
   $resource.find(".avg_rating").text(setAvgRating(resource));
-
-  // Getting the rating selected by the user
+  // Getting the rating selected by the user, activated on click
   $resource.find(".rateYo").rateYo("option", "onSet", function () {
-
     //exits function if user is not logged in
     if (!checkLogin()) {
       console.log("not logged in!");
       return;
     }
-
     //Get the rating clicked
     var new_rating = $resource.find(".rateYo").rateYo("rating");
-
     //Call a function to anlyse the user action
     var rating = analyseRating(resource, new_rating, this);
-
   });
-
   //Set the total of likes
   $resource.find(".totalOfLikes").text(updateLikesCounter(resource));
-
   //set the color of the heart if the user is logged in
   if (user_id) {
     if (doesUserLikeResource(user_id, resource.likes)) {
@@ -127,14 +118,13 @@ var createResourceElement = function (resource) {
       $resource.find(".glyphicon-heart").removeClass('liked');
     }
   }
-
   //Set the total of comments
   $resource.find(".totalOfComments").text(resource.comments);
-
   return $container;
 }
 
 var clearResources = function () {
+
   $('#all-resources').empty();
 }
 
@@ -147,16 +137,17 @@ var clearLikedResources = function () {
 }
 
 var renderResources = function (resources) {
-  // var resources = JSON.parse(localStorage.getItem('resources'));
+  //render all resources to home page for a given array of resource-data objects
   clearResources();
   for (var resource of resources) {
     $('#all-resources').append(createResourceElement(resource));
   }
+  changePointer();
 }
 
 var renderMyResources = function (resources) {
+  //render all resources that were created by the logged in user
   var user_id = JSON.parse(localStorage.getItem("userInfo")).id;
-  // var resources = JSON.parse(localStorage.getItem('resources'));
   var added = false;
   clearMyResources();
   for (var resource of resources) {
@@ -171,8 +162,8 @@ var renderMyResources = function (resources) {
 }
 
 var renderLikedResources = function (resources) {
+  //render all resources that are liked by the logged in user
   var user_id = JSON.parse(localStorage.getItem("userInfo")).id;
-  // var resources = JSON.parse(localStorage.getItem('resources'));
   var liked = false;
   clearLikedResources();
   for (var resource of resources) {
@@ -189,8 +180,10 @@ var renderLikedResources = function (resources) {
 }
 
 var renderMyResourcePage = function (resources) {
+  //call functions to render both parts of My Resources page
   renderMyResources(resources);
   renderLikedResources(resources);
+  changePointer();
 }
 
 var doesResourceContain = function (resource, str) {
@@ -203,6 +196,7 @@ var doesResourceContain = function (resource, str) {
   if (resource.description.toLowerCase().includes(str)) {
     return true;
   }
+  //check categories
   for (var category of resource.categories) {
     if (category.name.toLowerCase().includes(str)) {
       return true;
@@ -230,6 +224,7 @@ var searchBarHandler = function () {
 }
 
 var noResultsDisplay = function (num) {
+  //if there are no results returned from search, display "no results" message
   if (num === 0) {
     $('#no-results').show();
   } else {
@@ -238,9 +233,19 @@ var noResultsDisplay = function (num) {
 }
 
 var trimDescription = function (description) {
+  //if description is too long to be displayed on main page, trim to fit...
   var max = 77;
   if (description.length > max) {
     return description.slice(0, max - 3) + '...';
   }
   return description;
 }
+
+var changePointer = function () {
+  //changes pointer for hover on hearts if user is logged in
+  if (checkLogin()) {
+    console.log('logged in')
+    $('.likes').find('.glyphicon-heart').addClass('hover-pointer');
+  }
+}
+

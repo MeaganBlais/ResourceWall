@@ -42,7 +42,6 @@ module.exports = (knex) => {
     //attempts to log the user in using data provided by the request
     const user_name = req.body.user_name;
     const password  = req.body.password;
-
     //tries to find user in database with provided username
     knex('users')
       .select()
@@ -54,7 +53,7 @@ module.exports = (knex) => {
           res.status(500).send("No user exists.");
           return;
         }
-        //check hashed password against provided
+        //check hashed password against provided, if OK, respond by setting cookie
         if (bcrypt.compareSync(password, results[0].password)) {
           let userInfo = Object.assign({}, results[0]);
           delete userInfo.password;
@@ -68,8 +67,6 @@ module.exports = (knex) => {
       .catch( (err) => {
         throw err;
       })
-
-
   });
 
   router.post("/logout", (req, res) => {
@@ -78,8 +75,8 @@ module.exports = (knex) => {
     res.status(201).send();
   });
 
-  //allows users to update their profile information
   router.put("/:user_id", (req, res) => {
+  //allows users to update their profile information
     knex('users')
     .where('id', req.session.user.id)
     .update({
@@ -101,5 +98,6 @@ module.exports = (knex) => {
       }
     })
   });
+
   return router;
 }
