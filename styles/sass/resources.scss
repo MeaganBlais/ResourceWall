@@ -10,12 +10,21 @@
   height: 100%;
   position: relative;
   overflow: hidden;
+  //border: 2pt solid;
+  border-color: $nav-color;
+  min-height: 207px;
 
   .resource-left {
     display: inline-block;
     padding: 5px;
     width: 90%;
+
+    p {
+      height: 40px;
+    }
   }
+
+  color: black;
 
   .resource-right {
     background-color: $nav-color;
@@ -35,6 +44,10 @@
 
   footer {
     overflow: auto;
+
+    .footer-top {
+      overflow: auto;
+    }
 
     .ratings {
     display: flex;

@@ -15,23 +15,30 @@ var createResourceElement = function (resource) {
   var $resource = $(`<article id='resource-${resource.resource_id}'>`).addClass('resource-container');
   $container.addClass('col-xs-12 col-md-4');
   var $left = $(`<div class="resource-left"></div>`);
-  var $right = $(`<div class="resource-right"><i class="glyphicon glyphicon-menu-right"></i></div>`);
+  var $right = $(`
+      <a href="/resources/${resource.resource_id}">
+        <div class="resource-right">
+          <i class="glyphicon glyphicon-menu-right"></i>
+        </div>
+      </a>
+  `);
   var user_id = localStorage.getItem("userInfo") ? JSON.parse(localStorage.getItem("userInfo")).id : '';
 
   $resource.data('resource-data', resource);
 
   //header
   var resourceHeader = $("<header>").append(`
-    <h3><a href="${resource.URL}">${resource.title}</a></h1>
+    <h4><a href="${resource.URL}">${resource.title}</a></h1>
   `);
 
   //body
   var resourceBody = $("<section>").append(`
-    <p><a href="/resources/${resource.resource_id}">${resource.description}</a></p>
+    <p>${ trimDescription(resource.description) }</p>
   `);
 
   //footer
   var resourceFooter = $("<footer>").append(`
+    <div class="footer-top">
     <span>
       <img class="avatar" src="${resource.avatar_URL}">
       <span>${resource.user_name}</span>
@@ -52,10 +59,12 @@ var createResourceElement = function (resource) {
         <span class="comments"><i class="glyphicon glyphicon-comment"></i> <span class="totalOfComments"></span></span>
       </span>
     </span>
+    </div>
   `);
 
   if (resource.categories.length > 0) {
     resourceFooter.append(`<div class="small-tag-container"></div>`);
+
     for (category of resource.categories) {
       createTagComponent(category, resourceFooter.find('.small-tag-container'), "small")
     }
@@ -222,4 +231,11 @@ var noResultsDisplay = function (num) {
   }
 }
 
-
+var trimDescription = function (description) {
+  var max = 95;
+  console.log(description);
+  if (description.length > max) {
+    return description.slice(0, max - 3) + '...';
+  }
+  return description;
+}

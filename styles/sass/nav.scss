@@ -1,5 +1,8 @@
 .navbar {
   background-color: $nav-color;
+  width: 100%;
+  border: 0;
+  border-radius: 0;
 
   span {
     color: $nav-text-color;
