@@ -91,7 +91,7 @@ function loadDataResource(resource_id) {
 
       $(`#resource-${resource_id}`).data('resource-data', results[0]);
       var data = $(`#resource-${resource_id}`).data('resource-data');
-      renderTags(data.categories);
+      renderTagsResourceDetails(data.categories);
       var user_id = localStorage.getItem("userInfo") ? JSON.parse(localStorage.getItem("userInfo")).id : '';
 
       // var data = results[0];
@@ -148,9 +148,9 @@ function loadDataResource(resource_id) {
   });
 }
 
-function renderTags(categories) {
+function renderTagsResourceDetails(categories) {
   for (var category of categories) {
-    createTagComponent(category);
+    createTagComponent(category, $('.tag-container'), "large" , true);
   }
 }
 
@@ -159,6 +159,7 @@ $(document).ready( function() {
 
   setAutocomplete();
   deleteTagHandler();
+  tagFormHandler();
   // Variables to get information about the user and the resource id
   var resource_id = $('#url').data('id')
 

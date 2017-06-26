@@ -21,15 +21,16 @@ module.exports = (knex) => {
     let resource_id
     let promises = [];
 
-    newCategories.forEach((category) => {
-      promises.push(knex('categories').insert({name: category})
-        .returning('id')
-        .then((result) => {
-          categoryIDs.push(result[0]);
-          return result[0];
-        }));
-    })
-
+    if (newCategories) {
+      newCategories.forEach((category) => {
+        promises.push(knex('categories').insert({name: category})
+          .returning('id')
+          .then((result) => {
+            categoryIDs.push(result[0]);
+            return result[0];
+          }));
+      })
+    }
     promises.push(knex('resources')
           .insert(newResource)
           .returning('id')
@@ -111,6 +112,22 @@ module.exports = (knex) => {
               resource['comments'] = comments.length;
               return resource;
             }));
+        }
+        return Promise.all(promises);
+      })
+      .then((results) => {
+        let promises = [];
+        for (let resource of results) {
+          promises.push(
+            knex('resources_categories')
+              .join('categories', 'categories.id', '=', 'resources_categories.category_id')
+              .select('categories.id', 'categories.name', 'resources_categories.user_id')
+              .where('resources_categories.resource_id', resource.resource_id)
+              .then((categories) => {
+                resource['categories'] = categories;
+                return resource;
+              })
+          );
         }
         return Promise.all(promises);
       })
