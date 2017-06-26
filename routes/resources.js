@@ -21,15 +21,16 @@ module.exports = (knex) => {
     let resource_id
     let promises = [];
 
-    newCategories.forEach((category) => {
-      promises.push(knex('categories').insert({name: category})
-        .returning('id')
-        .then((result) => {
-          categoryIDs.push(result[0]);
-          return result[0];
-        }));
-    })
-
+    if (newCategories) {
+      newCategories.forEach((category) => {
+        promises.push(knex('categories').insert({name: category})
+          .returning('id')
+          .then((result) => {
+            categoryIDs.push(result[0]);
+            return result[0];
+          }));
+      })
+    }
     promises.push(knex('resources')
           .insert(newResource)
           .returning('id')

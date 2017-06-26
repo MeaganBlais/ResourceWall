@@ -159,6 +159,7 @@ $(document).ready( function() {
 
   setAutocomplete();
   deleteTagHandler();
+  tagFormHandler();
   // Variables to get information about the user and the resource id
   var resource_id = $('#url').data('id')
 
