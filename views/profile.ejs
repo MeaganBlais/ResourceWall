@@ -32,23 +32,17 @@
       <h1>Profile</h1>
 
       <div id="profile">
-
         <img class="avatar-big" src="<%= users.avatar_URL %>">
-
         <div class="input-group">
           <span class="input-group-addon" id="basic-addon1">Username</span><p><%= users.user_name %></p>
         </div>
-
         <div class="input-group">
           <span class="input-group-addon" id="basic-addon1">Fullname</span><p><%= users.full_name %></p>
         </div>
-
         <div class="input-group">
           <span class="input-group-addon" id="basic-addon1">Email</span><p><%= users.email %></p>
         </div>
-
         <button id="edit" class="btn btn-default">Edit</button>
-
       </div>
 
       <div id="profileUpdate">
@@ -58,29 +52,26 @@
             <span class="input-group-addon" id="basic-addon1">Profile Picture</span>
             <input type="text" class="form-control" placeholder="image url" name="avatar_URL" value="<%= users.avatar_URL %>"  maxlength="255" id="avatar">
           </div>
-
           <div class="input-group">
             <span class="input-group-addon" id="basic-addon1">Username (*)</span>
             <input type="text" class="form-control" placeholder="<%= users.user_name %>" name="user_name" value="<%= users.user_name %>" maxlength="20" id="username">
-
-            <div class="input-group">
-              <span class="input-group-addon" id="basic-addon1">Fullname (*)</span>
-              <input type="text" class="form-control" placeholder="<%= users.full_name %>" name="full_name" value="<%= users.full_name %>" maxlength="40" id="fullname">
-
-              <div class="input-group">
-                <span class="input-group-addon" id="basic-addon1">Email (*)</span>
-                <input type="email" class="form-control" placeholder="<%= users.email %>" name="email" value="<%= users.email %>"  maxlength="255" id="email">
-              </div>
-            </div>
-            <p id="register_message"></p>
-            <button class="btn btn-default" id="register-btn">Update</button>
           </div>
+          <div class="input-group">
+            <span class="input-group-addon" id="basic-addon1">Fullname (*)</span>
+            <input type="text" class="form-control" placeholder="<%= users.full_name %>" name="full_name" value="<%= users.full_name %>" maxlength="40" id="fullname">
+          </div>
+          <div class="input-group">
+            <span class="input-group-addon" id="basic-addon1">Email (*)</span>
+            <input type="email" class="form-control" placeholder="<%= users.email %>" name="email" value="<%= users.email %>"  maxlength="255" id="email">
+          </div>
+          <p id="register_message"></p>
+          <button class="btn btn-default" id="register-btn">Update</button>
         </form>
       </div>
-
-
-
-
     </div>
-  </body>
-  </html>
+
+
+
+  </div>
+</body>
+</html>
